@@ -13,7 +13,7 @@ public class Commercant extends Utilisateur {
 
 /*---------------------------------ATTRIBUTS----------------------------------*/
     
-    private String nomCommercant, telCommercant;
+    private String nomCommercant, adresseCommercant, telCommercant;
     
 /*-------------------------------FIN ATTRIBUTS--------------------------------*/
     
@@ -24,19 +24,27 @@ public class Commercant extends Utilisateur {
     public Commercant() {
         super();
         this.nomCommercant = "";
+        this.adresseCommercant = "";
         this.telCommercant = "";
     }
     
 //Constructeur par valeurs 1
     
-    public Commercant(String prenom, String nom, String adresse, String nomCommercant, String telCommercant) {
+    public Commercant(String prenom, String nom, String adresse, String nomCommercant, String adresseCommercant, String telCommercant) {
         super(prenom, nom, adresse);
         this.nomCommercant = nomCommercant;
+        this.adresseCommercant = adresseCommercant;
         this.telCommercant = telCommercant;
     }
     
 //Constructeur par valeurs 2
     
+    public Commercant(String prenom, String nom, String nomCommercant, String adresseCommercant, String telCommercant) {
+        super(prenom, nom);
+        this.nomCommercant = nomCommercant;
+        this.adresseCommercant = adresseCommercant;
+        this.telCommercant = telCommercant;
+    }
     
 /*-----------------------------FIN CONSTRUCTEURS------------------------------*/
     
@@ -47,6 +55,10 @@ public class Commercant extends Utilisateur {
         return nomCommercant;
     }
     
+    public String getAdresseCommercant() {
+        return adresseCommercant;
+    }
+    
     public String getTelCommercant() {
         return telCommercant;
     }
@@ -55,6 +67,10 @@ public class Commercant extends Utilisateur {
     
     public void setNomCommercant(String nomComemrcant) {
         this.nomCommercant = nomCommercant;
+    }
+    
+    public void setAdresseCommercant(String adresseCommercant) {
+        this.adresseCommercant = adresseCommercant;
     }
     
     public void setTelCommercant(String telCommercant) {
@@ -69,7 +85,7 @@ public class Commercant extends Utilisateur {
 
     @Override
     public String toString() {
-        return "modele.Commercant[ id=" + this.getIdPersonne() + ", prenom=" + this.getPrenom() + ", nom=" + this.getNom() + ", adresse=" + this.getAdresse() + ", identifiant=" + this.getIdentifiant() + ", password=" + this.getPassword() + ", nom commercant=" + nomCommercant + ", telCommercant=" + telCommercant + " ]";
+        return "modele.Commercant[ idPersonne=" + this.getIdPersonne() + ", prenom=" + this.getPrenom() + ", nom=" + this.getNom() + ", adresse=" + this.getAdresse() + ", identifiant=" + this.getIdentifiant() + ", password=" + this.getPassword() + ", nom commercant=" + nomCommercant + ", adresseCommercant=" + adresseCommercant + ", telCommercant=" + telCommercant + " ]";
     }
     
 /*--------------------------------FIN METHODES--------------------------------*/
