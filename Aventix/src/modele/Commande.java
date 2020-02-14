@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 /*--------------------------------FIN IMPORTS---------------------------------*/
 
@@ -22,17 +23,18 @@ public class Commande implements Serializable {
     
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCommande;
  
-    private Long idEmployeur;
+    private Long idEntreprise;
     private long nbCartes;
     private float montantTotal;
     private String commentaires;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateCommande;
-    
+    @Transient
     private DateFormat shortDateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
+    @Transient
     final private int prixUnitaire = 10;
     
 /*-------------------------------FIN ATTRIBUTS--------------------------------*/
@@ -42,30 +44,31 @@ public class Commande implements Serializable {
 //Constructeur par défault
     
     public Commande() {
-        this.idEmployeur = 0L;
+        this.idEntreprise = 0L;
+        this.dateCommande = new Date();
         this.nbCartes = 0;
         this.montantTotal = 0;
         this.commentaires = "";
-        this.dateCommande = new Date();
     }
     
 //Constructeur par valeurs 1
     
-    public Commande(Long idEmployeur, long nbCartes, String commentaires) {
-        this.idEmployeur = idEmployeur;
+    public Commande(Long idEntreprise, long nbCartes, String commentaires) {
+        this.idEntreprise = idEntreprise;
+        this.dateCommande = new Date();
         this.nbCartes = nbCartes;
         this.montantTotal = nbCartes * prixUnitaire;
         this.commentaires = commentaires;
-        this.dateCommande = new Date();
     }
     
 //Constructeur par valeurs 2
     
-    public Commande(Long idEmployeur, long nbCartes) {
-        this.idEmployeur = idEmployeur;
+    public Commande(Long idEntreprise, long nbCartes) {
+        this.idEntreprise = idEntreprise;
+        this.dateCommande = new Date();
         this.nbCartes = nbCartes;
         this.montantTotal = nbCartes * prixUnitaire;
-        this.dateCommande = new Date();
+        this.commentaires = "";
     }
     
 /*-----------------------------FIN CONSTRUCTEURS------------------------------*/
@@ -73,12 +76,16 @@ public class Commande implements Serializable {
 /*----------------------------------METHODES----------------------------------*/
 /*----------------------------------Getters-----------------------------------*/
     
-    public int getIdCommande() {
+    public int getId() {
         return hashCode();
     }
     
-    public Long getIdEmployeur() {
-        return idEmployeur;
+    public Long getIdEntreprise() {
+        return idEntreprise;
+    }
+    
+    public Date getDateCommande() {
+        return dateCommande;
     }
     
     public long getNbCartes() {
@@ -93,14 +100,10 @@ public class Commande implements Serializable {
         return commentaires;
     }
     
-    public Date getDateCommande() {
-        return dateCommande;
-    }
-    
 /*----------------------------------Setters-----------------------------------*/
     
-    public void setIdEmployeur(Long idEmployeur) {
-        this.idEmployeur = idEmployeur;
+    public void setIdEntreprise(Long idEntreprise) {
+        this.idEntreprise = idEntreprise;
     }
     
     public void setNbCartes(long nbCartes) {
@@ -139,7 +142,7 @@ public class Commande implements Serializable {
 
     @Override
     public String toString() {
-        return "modele.Commande[ id commande=" + idCommande + ", id employeur=" + idEmployeur + ", nb cartes=" + nbCartes + ", montant total=" + montantTotal + ", date=" + shortDateFormat.format(dateCommande) + ", commentaires=" + commentaires + " ]";
+        return "modele.Commande[ id commande=" + idCommande + ", id entreprise=" + idEntreprise + ", date=" + shortDateFormat.format(dateCommande) + ", nb cartes=" + nbCartes + ", montant total=" + montantTotal + ", commentaires=" + commentaires + " ]";
     }
     
 /*--------------------------------FIN METHODES--------------------------------*/

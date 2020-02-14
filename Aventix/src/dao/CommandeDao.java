@@ -43,7 +43,7 @@ public class CommandeDao {
         return liste;
     }
     
-    public Commande findCommandeByIdCommande(Long idCommande){
+    public Commande findCommandeById(Long idCommande){
         EntityManager em = JpaUtil.getEntityManager();
         return em.find(Commande.class, idCommande);
     }
@@ -55,9 +55,9 @@ public class CommandeDao {
         return liste;
     }
     
-    public List<Commande> findCommandeByIdEmployeur(Long idEmployeur){
+    public List<Commande> findCommandeByIdEntreprise(Long idEntreprise){
         EntityManager em = JpaUtil.getEntityManager();
-        Query query = em.createQuery("select c from commande as c where c.idEmployeur=:idEmployeur").setParameter("idEmployeur", idEmployeur);
+        Query query = em.createQuery("select c from commande as c where c.idEntreprise=:idEntreprise").setParameter("idEntreprise", idEntreprise);
         List<Commande> liste = query.getResultList();
         return liste;
     }

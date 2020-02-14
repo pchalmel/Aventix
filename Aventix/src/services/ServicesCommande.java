@@ -16,8 +16,8 @@ public interface ServicesCommande {
     public void miseAJourCommande(Commande c);
     public List<Commande> findAllCommandes();
     public List<Commande> findCommandeByDate(Date dateCommande);
-    public List<Commande> findCommandeByIdEmployeur(Long idEmployeur);
-    public Commande findCommandeByIdCommande(Long idCommande);
+    public List<Commande> findCommandeByIdEntreprise(Long idEntreprise);
+    public Commande findCommandeById(Long idCommande);
 }
 
                     /*Fin Interface Services Commande*/

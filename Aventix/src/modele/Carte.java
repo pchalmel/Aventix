@@ -19,13 +19,13 @@ public class Carte implements Serializable {
     
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCarte;
     
+    private Long idEmploye;
     private boolean validite;
     private int montantMaxJournalier;
     private float solde;
-    private Long idEmploye;
 
 /*-------------------------------FIN ATTRIBUTS--------------------------------*/
     
@@ -35,34 +35,35 @@ public class Carte implements Serializable {
     
     public Carte() {
         this.idEmploye = 0L;
+        this.validite = false;
         this.montantMaxJournalier = 0;
         this.solde = 0;
-        this.validite = false;
     }
     
-//Constructeur par valeurs 1
+//Constructeur par valeurs
     
     public Carte(Long idEmploye, int montantMaxJournalier) {
         this.idEmploye = idEmploye;
+        this.validite = true;
         this.montantMaxJournalier = montantMaxJournalier;
         this.solde = 0;
-        this.validite = true;
-    }
-    
-//Constructeur par valeurs 2
-    
+    }    
     
 /*-----------------------------FIN CONSTRUCTEURS------------------------------*/
     
 /*----------------------------------METHODES----------------------------------*/
 /*----------------------------------Getters-----------------------------------*/
     
-    public int getIdCarte() {
+    public int getId() {
         return hashCode();
     }
     
     public Long getIdEmploye() {
         return idEmploye;
+    }
+    
+    public boolean getValidite() {
+        return validite;
     }
     
     public int getMontantMaxJournalier() {
@@ -73,14 +74,14 @@ public class Carte implements Serializable {
         return solde;
     }
     
-    public boolean getValidite() {
-        return validite;
-    }
-    
 /*----------------------------------Setters-----------------------------------*/
    
     public void setIdEmploye(Long idEmploye) {
         this.idEmploye = idEmploye;
+    }
+    
+    public void setValidite(boolean validite) {
+        this.validite = validite;
     }
     
     public void setMontantMaxJournalier(int montantMaxJournalier) {
@@ -91,13 +92,15 @@ public class Carte implements Serializable {
         this.solde = solde;
     }
     
-    public void setValidite(boolean validite) {
-        this.validite = validite;
-    }
-    
 /*-----------------------------------Others-----------------------------------*/
     
-
+    public void recharger(int montant) {
+        this.solde += montant;
+    }
+    
+    public void changerMontantMaxJournalier(int montant) {
+        this.montantMaxJournalier = montant;
+    }
 
 /*---------------------------------Surcharges---------------------------------*/
 
@@ -123,7 +126,7 @@ public class Carte implements Serializable {
 
     @Override
     public String toString() {
-        return "modele.Carte[ id carte=" + idCarte + ", id employe=" + idEmploye + ", montant max journalier=" + montantMaxJournalier + ", solde=" + solde + ", validite=" + validite + " ]";
+        return "modele.Carte[ id carte=" + idCarte + ", id employe=" + idEmploye + ", validite=" + validite + ", montant max journalier=" + montantMaxJournalier + ", solde=" + solde + " ]";
     }
     
 /*--------------------------------FIN METHODES--------------------------------*/

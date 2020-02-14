@@ -43,7 +43,7 @@ public class CarteDao {
         return liste;
     }
     
-    public Carte findCarteByIdCarte(Long idCarte){
+    public Carte findCarteById(Long idCarte){
         EntityManager em = JpaUtil.getEntityManager();
         return em.find(Carte.class, idCarte);
     }

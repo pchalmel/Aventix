@@ -42,9 +42,9 @@ public class EmployeDao {
         return liste;
     }
     
-    public Employe findEmployeByIdPersonne(Long idPersonne){
+    public Employe findEmployeById(Long idEmploye){
         EntityManager em = JpaUtil.getEntityManager();
-        return em.find(Employe.class, idPersonne);
+        return em.find(Employe.class, idEmploye);
     }
     
     public List<Employe> findEmployeByPrenom(String prenom){
@@ -61,23 +61,21 @@ public class EmployeDao {
         return liste;
     }
     
-    public List<Employe> findEmployeByNomSociete(Long idEmployeur){
+    public List<Employe> findEmployeByEntreprise(Long idEntreprise){
         EntityManager em = JpaUtil.getEntityManager();
-        Query query = em.createQuery("select e from employe as e where e.idEmployeur=:idEmployeur").setParameter("idEmployeur", idEmployeur);
+        Query query = em.createQuery("select e from employe as e where e.idEntreprise=:idEntreprise").setParameter("idEntreprise", idEntreprise);
         List<Employe> liste = query.getResultList();
         return liste;
     }
     
     public Employe findEmployeByIdCarte(Long idCarte){
         EntityManager em = JpaUtil.getEntityManager();
-        Query query = em.createQuery("select e from employe as e where e.idCarte=:idCarte").setParameter("idCarte", idCarte);
-        Employe e = (Employe) query.getResultList();
-        return e;
+        return em.find(Employe.class, idCarte);
     }
     
-    public Employe findEmployeByIdentifiant(String identifiant){
+    public Employe findEmployeByEmail(String email){
         EntityManager em = JpaUtil.getEntityManager();
-        return em.find(Employe.class, identifiant);
+        return em.find(Employe.class, email);
     }
     
 /*---------------------------FIN FINDERS EMPLOYES-----------------------------*/

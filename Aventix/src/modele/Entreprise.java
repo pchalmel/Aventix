@@ -1,4 +1,4 @@
-                               /*Classe Commercant*/
+                               /*Classe Entreprise*/
 
 package modele;
 
@@ -13,16 +13,16 @@ import javax.persistence.Id;
 /*--------------------------------FIN IMPORTS---------------------------------*/
 
 @Entity
-public class Commercant implements Serializable {
+public class Entreprise implements Serializable {
 
 /*---------------------------------ATTRIBUTS----------------------------------*/
     
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idCommercant;
+    private Long idEntreprise;
     
-    private String nomCommercant, email, password, adresse, telephone, iban;
+    private String nomEntreprise, email, password, adresse, telephone;
     
 /*-------------------------------FIN ATTRIBUTS--------------------------------*/
     
@@ -30,24 +30,22 @@ public class Commercant implements Serializable {
     
 //Constructeur par défault
     
-    public Commercant() {
-        this.nomCommercant = "";
+    public Entreprise() {
+        this.nomEntreprise = "";
         this.email = "";
         this.password = "";
         this.adresse = "";
         this.telephone = "";
-        this.iban = "";
     }
     
 //Constructeur par valeurs
     
-    public Commercant(String nomCommercant, String email, String adresse, String telephone, String iban) {
-        this.nomCommercant = nomCommercant;
+    public Entreprise(String nomEntreprise, String email, String adresse, String telephone) {
+        this.nomEntreprise = nomEntreprise;
         this.email = email;
-        this.password = (this.getNomCommercant() + "@" + "2020").replace(" ", "");
+        this.password = (this.getNomEntreprise() + "@" + "2020").replace(" ", "");
         this.adresse = adresse;
         this.telephone = telephone;
-        this.iban = iban;
     }
     
 /*-----------------------------FIN CONSTRUCTEURS------------------------------*/
@@ -59,8 +57,8 @@ public class Commercant implements Serializable {
         return hashCode();
     }
     
-    public String getNomCommercant() {
-        return nomCommercant;
+    public String getNomEntreprise() {
+        return nomEntreprise;
     }
     
     public String getEmail() {
@@ -79,14 +77,10 @@ public class Commercant implements Serializable {
         return telephone;
     }
     
-    public String getIban() {
-        return iban;
-    }
-    
 /*----------------------------------Setters-----------------------------------*/
     
-    public void setNomCommercant(String nomCommercant) {
-        this.nomCommercant = nomCommercant;
+    public void setNomEntreprise(String nomEntreprise) {
+        this.nomEntreprise = nomEntreprise;
     }
     
     public void setEmail(String email) {
@@ -105,10 +99,6 @@ public class Commercant implements Serializable {
         this.telephone = telephone;
     }
     
-    public void setIban(String iban) {
-        this.iban = iban;
-    }
-    
 /*-----------------------------------Others-----------------------------------*/
     
     public void demenager(String adresse) {
@@ -116,7 +106,7 @@ public class Commercant implements Serializable {
     }
     
     public void changerNom(String nom) {
-        this.setNomCommercant(nom);
+        this.setNomEntreprise(nom);
     }
     
     public void changerEmail(String email) {
@@ -126,28 +116,24 @@ public class Commercant implements Serializable {
     public void changerPassword(String password) {
         this.setPassword(password);
     }
-    
-    public void changerIban(String iban) {
-        this.setIban(iban);
-    }
 
 /*---------------------------------Surcharges---------------------------------*/
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idCommercant != null ? idCommercant.hashCode() : 0);
+        hash += (idEntreprise != null ? idEntreprise.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Commercant)) {
+        if (!(object instanceof Entreprise)) {
             return false;
         }
-        Commercant other = (Commercant) object;
-        if ((this.idCommercant == null && other.idCommercant != null) || (this.idCommercant != null && !this.idCommercant.equals(other.idCommercant))) {
+        Entreprise other = (Entreprise) object;
+        if ((this.idEntreprise == null && other.idEntreprise != null) || (this.idEntreprise != null && !this.idEntreprise.equals(other.idEntreprise))) {
             return false;
         }
         return true;
@@ -155,11 +141,11 @@ public class Commercant implements Serializable {
     
     @Override
     public String toString() {
-        return "modele.Commercant[ idCommercant=" + idCommercant + ", nom commercant=" + nomCommercant + ", email=" + email + ", password=" + password + ", adresse=" + adresse + ", telephone=" + telephone + ", iban=" + iban + " ]";
+        return "modele.Entreprise[ idEntreprise=" + idEntreprise + ", nom entreprise=" + nomEntreprise + ", email=" + email + ", password=" + password + ", adresse=" + adresse + ", telephone=" + telephone + " ]";
     }
     
 /*--------------------------------FIN METHODES--------------------------------*/
     
 }
 
-                            /*Fin classe Commercant*/
+                            /*Fin classe Employeur*/
