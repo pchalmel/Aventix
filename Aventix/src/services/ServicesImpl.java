@@ -342,7 +342,7 @@ public class ServicesImpl implements ServicesEmploye, ServicesEntreprise, Servic
     
 /*-------------------------------FIN COMMANDES--------------------------------*/
     
-/*---------------------------------CARTES----------------------------------*/
+/*----------------------------------CARTES------------------------------------*/
     
     public void referencerCarte(Carte c) {
         CarteDao dao = new CarteDao();
@@ -413,7 +413,85 @@ public class ServicesImpl implements ServicesEmploye, ServicesEntreprise, Servic
         return dao.findCarteByIdEmploye(idEmploye);
     }
     
-/*-------------------------------FIN CARTES--------------------------------*/
+/*--------------------------------FIN CARTES----------------------------------*/
+    
+/*-------------------------------TRANSACTIONS---------------------------------*/
+    
+    public void referencerTransa(Transa t) {
+        TransaDao dao = new TransaDao();
+        EntityTransaction tx = null;
+        try{
+            tx = JpaUtil.getEntityTransaction();
+            tx.begin();
+            dao.createTransa(t);
+            tx.commit();
+        }catch(Exception ex){
+            ex.printStackTrace();
+            if(tx != null && tx.isActive()){
+                tx.rollback();
+            }
+        }finally{
+            JpaUtil.closeEntityManager();
+        }
+    }
+    
+    public void dereferencerTransa(Transa t) {
+        TransaDao dao = new TransaDao();
+        EntityTransaction tx = null;
+        try{
+            tx = JpaUtil.getEntityTransaction();
+            tx.begin();
+            dao.deleteTransa(t);
+            tx.commit();
+        }catch(Exception ex){
+            ex.printStackTrace();
+            if(tx != null && tx.isActive()){
+                tx.rollback();
+            }
+        }finally{
+            JpaUtil.closeEntityManager();
+        }
+    }
+    
+    public void miseAJourTransa(Transa t) {
+        TransaDao dao = new TransaDao();
+        EntityTransaction tx = null;
+        try{
+            tx = JpaUtil.getEntityTransaction();
+            tx.begin();
+            dao.updateTransa(t);
+            tx.commit();
+        }catch(Exception ex){
+            ex.printStackTrace();
+            if(tx != null && tx.isActive()){
+                tx.rollback();
+            }
+        }finally{
+            JpaUtil.closeEntityManager();
+        }
+    }
+    
+    public List<Transa> findAllTransas() {
+        TransaDao dao = new TransaDao();
+        return dao.findAllTransas();
+    }
+    
+    public Transa findTransaById(Long idTransaction) {
+        TransaDao dao = new TransaDao();
+        return dao.findTransaById(idTransaction);
+    }
+    
+    public List<Transa> findTransaByDate(Date dateTransa) {
+        TransaDao dao = new TransaDao();
+        return dao.findTransaByDate(dateTransa);
+    }
+    
+    public List<Transa> findTransaByIdEntreprise(Long idEntreprise) {
+        TransaDao dao = new TransaDao();
+        return dao.findTransaByIdEntreprise(idEntreprise);
+    }
+    
+/*------------------------------FIN TRANSACTIONS------------------------------*/
     
 }
 

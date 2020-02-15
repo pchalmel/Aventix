@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /*--------------------------------FIN IMPORTS---------------------------------*/
 
@@ -21,7 +22,12 @@ public class Employe implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEmploye;
-    private Long idEntreprise, idCarte;
+    
+    @ManyToOne
+    private Entreprise entreprise;
+    
+    private Long idEntreprise;
+    private Long idCarte;
     private String prenom, nom, adresse, email, password;
     
 /*-------------------------------FIN ATTRIBUTS--------------------------------*/

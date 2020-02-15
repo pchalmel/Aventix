@@ -3,14 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Git%20Projects/Projet%20Transversal/Aventix/src/modele/Utilisateur.java</file>
             <file>file:/D:/Git%20Projects/Projet%20Transversal/Aventix/src/modele/Commande.java</file>
-            <file>file:/D:/Git%20Projects/Projet%20Transversal/Aventix/src/modele/Employeur.java</file>
+            <file>file:/D:/Git%20Projects/Projet%20Transversal/Aventix/src/dao/TransaDao.java</file>
+            <file>file:/D:/Git%20Projects/Projet%20Transversal/Aventix/src/modele/Entreprise.java</file>
+            <file>file:/D:/Git%20Projects/Projet%20Transversal/Aventix/src/services/ServicesTransa.java</file>
+            <file>file:/D:/Git%20Projects/Projet%20Transversal/Aventix/src/services/ServicesImpl.java</file>
             <file>file:/D:/Git%20Projects/Projet%20Transversal/Aventix/src/modele/Employe.java</file>
             <file>file:/D:/Git%20Projects/Projet%20Transversal/Aventix/src/gui/Main.java</file>
-            <file>file:/D:/Git%20Projects/Projet%20Transversal/Aventix/src/modele/Personne.java</file>
             <file>file:/D:/Git%20Projects/Projet%20Transversal/Aventix/src/modele/Commercant.java</file>
             <file>file:/D:/Git%20Projects/Projet%20Transversal/Aventix/src/modele/Carte.java</file>
+            <file>file:/D:/Git%20Projects/Projet%20Transversal/Aventix/src/modele/Transa.java</file>
         </group>
     </open-files>
 </project-private>

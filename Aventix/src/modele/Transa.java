@@ -1,4 +1,4 @@
-                               /*Classe Transaction*/
+                               /*Classe Transa*/
 
 package modele;
 
@@ -11,25 +11,27 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
 import javax.persistence.Transient;
 
 /*--------------------------------FIN IMPORTS---------------------------------*/
 
 @Entity
-public class Transaction implements Serializable {
+public class Transa implements Serializable {
 
 /*---------------------------------ATTRIBUTS----------------------------------*/
     
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idTransaction;
+    private Long idTransa;
     
     private Long idCarte, idCommercant;
     private float montant;
     @Transient
     private DateFormat shortDateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
-    private Date dateTransaction;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dateTransa;
     private boolean statut;
     
 /*-------------------------------FIN ATTRIBUTS--------------------------------*/
@@ -38,20 +40,20 @@ public class Transaction implements Serializable {
     
 //Constructeur par défault
     
-    public Transaction() {
+    public Transa() {
         this.idCarte = 0L;
         this.idCommercant = 0L;
-        this.dateTransaction = new Date();
+        this.dateTransa = new Date();
         this.montant = 0;
         this.statut = false;
     }
     
 //Constructeur par valeurs
     
-    public Transaction(Long idCarte, Long idCommercant, float montant) {
+    public Transa(Long idCarte, Long idCommercant, float montant) {
         this.idCarte = idCarte;
         this.idCommercant = idCommercant;
-        this.dateTransaction = new Date();
+        this.dateTransa = new Date();
         this.montant = montant;
         this.statut = false;
     }
@@ -74,7 +76,7 @@ public class Transaction implements Serializable {
     }
     
     public Date getDate() {
-        return dateTransaction;
+        return dateTransa;
     }
     
     public float getMontant() {
@@ -111,18 +113,18 @@ public class Transaction implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idTransaction != null ? idTransaction.hashCode() : 0);
+        hash += (idTransa != null ? idTransa.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Transaction)) {
+        if (!(object instanceof Transa)) {
             return false;
         }
-        Transaction other = (Transaction) object;
-        if ((this.idTransaction == null && other.idTransaction != null) || (this.idTransaction != null && !this.idTransaction.equals(other.idTransaction))) {
+        Transa other = (Transa) object;
+        if ((this.idTransa == null && other.idTransa != null) || (this.idTransa != null && !this.idTransa.equals(other.idTransa))) {
             return false;
         }
         return true;
@@ -130,11 +132,11 @@ public class Transaction implements Serializable {
     
     @Override
     public String toString() {
-        return "modele.Transaction[ id transaction=" + idTransaction + ", id carte=" + idCarte + ", idCommercant=" + idCommercant + ", date=" + dateTransaction + ", montant=" + montant + ", statut=" + statut + " ]";
+        return "modele.Transaction[ id transaction=" + idTransa + ", id carte=" + idCarte + ", idCommercant=" + idCommercant + ", date=" + dateTransa + ", montant=" + montant + ", statut=" + statut + " ]";
     }
     
 /*--------------------------------FIN METHODES--------------------------------*/
     
 }
 
-                            /*Fin classe Transaction*/
+                            /*Fin classe Transa*/

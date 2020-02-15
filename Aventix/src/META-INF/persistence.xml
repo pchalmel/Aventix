@@ -7,12 +7,12 @@
     <class>modele.Carte</class>
     <class>modele.Commande</class>
     <class>modele.Entreprise</class>
-    <class>modele.Transaction</class>
+    <class>modele.Transa</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/mysql?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
-      <property name="javax.persistence.jdbc.user" value="root"/>
-      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.password" value=""/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/Aventix"/>
+      <property name="javax.persistence.jdbc.user" value="ocinquin"/>
+      <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
+      <property name="javax.persistence.jdbc.password" value="LnXyKJRsA"/>
       <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>
   </persistence-unit>
