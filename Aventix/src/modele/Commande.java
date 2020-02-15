@@ -11,8 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
-import javax.persistence.Transient;
 
 /*--------------------------------FIN IMPORTS---------------------------------*/
 
@@ -26,15 +26,17 @@ public class Commande implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCommande;
  
-    private Long idEntreprise;
+    @ManyToOne
+    private Entreprise entreprise;
+    
     private long nbCartes;
     private float montantTotal;
     private String commentaires;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateCommande;
-    @Transient
+    //@Transient
     private DateFormat shortDateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
-    @Transient
+    //@Transient
     final private int prixUnitaire = 10;
     
 /*-------------------------------FIN ATTRIBUTS--------------------------------*/
@@ -44,7 +46,6 @@ public class Commande implements Serializable {
 //Constructeur par défault
     
     public Commande() {
-        this.idEntreprise = 0L;
         this.dateCommande = new Date();
         this.nbCartes = 0;
         this.montantTotal = 0;
@@ -53,8 +54,8 @@ public class Commande implements Serializable {
     
 //Constructeur par valeurs 1
     
-    public Commande(Long idEntreprise, long nbCartes, String commentaires) {
-        this.idEntreprise = idEntreprise;
+    public Commande(Entreprise entreprise, long nbCartes, String commentaires) {
+        this.entreprise = entreprise;
         this.dateCommande = new Date();
         this.nbCartes = nbCartes;
         this.montantTotal = nbCartes * prixUnitaire;
@@ -63,8 +64,8 @@ public class Commande implements Serializable {
     
 //Constructeur par valeurs 2
     
-    public Commande(Long idEntreprise, long nbCartes) {
-        this.idEntreprise = idEntreprise;
+    public Commande(Entreprise entreprise, long nbCartes) {
+        this.entreprise = entreprise;
         this.dateCommande = new Date();
         this.nbCartes = nbCartes;
         this.montantTotal = nbCartes * prixUnitaire;
@@ -80,8 +81,8 @@ public class Commande implements Serializable {
         return hashCode();
     }
     
-    public Long getIdEntreprise() {
-        return idEntreprise;
+    public Entreprise getEntreprise() {
+        return entreprise;
     }
     
     public Date getDateCommande() {
@@ -102,8 +103,8 @@ public class Commande implements Serializable {
     
 /*----------------------------------Setters-----------------------------------*/
     
-    public void setIdEntreprise(Long idEntreprise) {
-        this.idEntreprise = idEntreprise;
+    public void setEntreprise(Entreprise entreprise) {
+        this.entreprise = entreprise;
     }
     
     public void setNbCartes(long nbCartes) {
@@ -142,7 +143,7 @@ public class Commande implements Serializable {
 
     @Override
     public String toString() {
-        return "modele.Commande[ id commande=" + idCommande + ", id entreprise=" + idEntreprise + ", date=" + shortDateFormat.format(dateCommande) + ", nb cartes=" + nbCartes + ", montant total=" + montantTotal + ", commentaires=" + commentaires + " ]";
+        return "modele.Commande[ id commande=" + idCommande + ", entreprise=" + this.getEntreprise().getNomEntreprise() + ", date=" + shortDateFormat.format(dateCommande) + ", nb cartes=" + nbCartes + ", montant total=" + montantTotal + ", commentaires=" + commentaires + " ]";
     }
     
 /*--------------------------------FIN METHODES--------------------------------*/

@@ -5,11 +5,13 @@ package modele;
 /*----------------------------------IMPORTS-----------------------------------*/
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /*--------------------------------FIN IMPORTS---------------------------------*/
 
@@ -26,8 +28,9 @@ public class Employe implements Serializable {
     @ManyToOne
     private Entreprise entreprise;
     
-    private Long idEntreprise;
-    private Long idCarte;
+    @OneToOne(mappedBy="employe", cascade = CascadeType.PERSIST)
+    private Carte carte;
+    
     private String prenom, nom, adresse, email, password;
     
 /*-------------------------------FIN ATTRIBUTS--------------------------------*/
@@ -42,32 +45,52 @@ public class Employe implements Serializable {
         this.adresse = "";
         this.email = this.getPrenom().toLowerCase().replace(" ", "-") + "." + this.getNom().toLowerCase().replace(" ", "") + "@aventix.fr";
         this.password = (this.getNom() + this.getPrenom() + "@" + "2020").replace(" ", "");
-        this.idEntreprise = 0L;
-        this.idCarte = 0L;
     }
     
 //Constructeur par valeurs 1
     
-    public Employe(String prenom, String nom, String adresse, String email, Long idEntreprise, Long idCarte) {
+    public Employe(String prenom, String nom, String adresse, String email, Entreprise entreprise, Carte carte) {
         this.prenom = prenom;
         this.nom = nom;
         this.adresse = adresse;
         this.email = email;
         this.password = (this.getNom() + this.getPrenom() + "@" + "2020").replace(" ", "");
-        this.idEntreprise = idEntreprise;
-        this.idCarte = idCarte;
+        this.entreprise = entreprise;
+        this.carte = carte;
     }
     
 //Constructeur par valeurs 2
     
-    public Employe(String prenom, String nom, String email, Long idEntreprise, Long idCarte) {
+    public Employe(String prenom, String nom, String email, Entreprise entreprise, Carte carte) {
         this.prenom = prenom;
         this.nom = nom;
         this.adresse = "";
         this.email = email;
         this.password = (this.getNom() + this.getPrenom() + "@" + "2020").replace(" ", "");
-        this.idEntreprise = idEntreprise;
-        this.idCarte = idCarte;
+        this.entreprise = entreprise;
+        this.carte = carte;
+    }
+    
+//Constructeur par valeurs 3
+    
+    public Employe(String prenom, String nom, String adresse, String email, Entreprise entreprise) {
+        this.prenom = prenom;
+        this.nom = nom;
+        this.adresse = adresse;
+        this.email = email;
+        this.password = (this.getNom() + this.getPrenom() + "@" + "2020").replace(" ", "");
+        this.entreprise = entreprise;
+    }
+    
+//Constructeur par valeurs 4
+    
+    public Employe(String prenom, String nom, String email, Entreprise entreprise) {
+        this.prenom = prenom;
+        this.nom = nom;
+        this.adresse = "";
+        this.email = email;
+        this.password = (this.getNom() + this.getPrenom() + "@" + "2020").replace(" ", "");
+        this.entreprise = entreprise;
     }
     
 /*-----------------------------FIN CONSTRUCTEURS------------------------------*/
@@ -99,12 +122,12 @@ public class Employe implements Serializable {
         return password;
     }
     
-    public Long getIdEntreprise() {
-        return idEntreprise;
+    public Entreprise getEntreprise() {
+        return entreprise;
     }
     
-    public Long getIdCarte() {
-        return idCarte;
+    public Carte getCarte() {
+        return carte;
     }
     
 /*----------------------------------Setters-----------------------------------*/
@@ -129,12 +152,12 @@ public class Employe implements Serializable {
         this.password = password;
     }
     
-    public void setIdEntreprise(Long idEntreprise) {
-        this.idEntreprise = idEntreprise;
+    public void setEntreprise(Entreprise entreprise) {
+        this.entreprise = entreprise;
     }
     
-    public void setIdCarte(Long idCarte) {
-        this.idCarte = idCarte;
+    public void setCarte(Carte carte) {
+        this.carte = carte;
     }
     
 /*-----------------------------------Others-----------------------------------*/
@@ -179,7 +202,7 @@ public class Employe implements Serializable {
     
     @Override
     public String toString() {
-        return "modele.Employe[ idEmploye=" + idEmploye + ", prenom=" + prenom + ", nom=" + nom + ", adresse=" + adresse + ", email=" + email + ", password=" + password + ", id employeur=" + idEntreprise + ", id carte=" + idCarte + " ]";
+        return "modele.Employe[ idEmploye=" + idEmploye + ", prenom=" + prenom + ", nom=" + nom + ", adresse=" + adresse + ", email=" + email + ", password=" + password + ", entreprise=" + entreprise + ", carte=" + this.getCarte().getId() + " ]";
     }
     
 /*--------------------------------FIN METHODES--------------------------------*/

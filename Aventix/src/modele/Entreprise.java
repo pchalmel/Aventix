@@ -5,10 +5,14 @@ package modele;
 /*----------------------------------IMPORTS-----------------------------------*/
 
 import java.io.Serializable;
+import java.util.Collection;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 /*--------------------------------FIN IMPORTS---------------------------------*/
 
@@ -21,6 +25,12 @@ public class Entreprise implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEntreprise;
+    
+    @OneToMany(mappedBy="entreprise", cascade = CascadeType.PERSIST)
+    private Collection<Employe> employes;
+    
+    @OneToMany(mappedBy="entreprise", cascade = CascadeType.PERSIST)
+    private Collection<Commande> commandes;
     
     private String nomEntreprise, email, password, adresse, telephone;
     

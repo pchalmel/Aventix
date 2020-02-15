@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /*--------------------------------FIN IMPORTS---------------------------------*/
 
@@ -22,7 +23,9 @@ public class Carte implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCarte;
     
-    private Long idEmploye;
+    @OneToOne
+    private Employe employe;
+    
     private boolean validite;
     private int montantMaxJournalier;
     private float solde;
@@ -34,7 +37,6 @@ public class Carte implements Serializable {
 //Constructeur par défault
     
     public Carte() {
-        this.idEmploye = 0L;
         this.validite = false;
         this.montantMaxJournalier = 0;
         this.solde = 0;
@@ -42,8 +44,7 @@ public class Carte implements Serializable {
     
 //Constructeur par valeurs
     
-    public Carte(Long idEmploye, int montantMaxJournalier) {
-        this.idEmploye = idEmploye;
+    public Carte(int montantMaxJournalier) {
         this.validite = true;
         this.montantMaxJournalier = montantMaxJournalier;
         this.solde = 0;
@@ -58,8 +59,8 @@ public class Carte implements Serializable {
         return hashCode();
     }
     
-    public Long getIdEmploye() {
-        return idEmploye;
+    public Employe getEmploye() {
+        return employe;
     }
     
     public boolean getValidite() {
@@ -76,8 +77,8 @@ public class Carte implements Serializable {
     
 /*----------------------------------Setters-----------------------------------*/
    
-    public void setIdEmploye(Long idEmploye) {
-        this.idEmploye = idEmploye;
+    public void setEmploye(Employe employe) {
+        this.employe = employe;
     }
     
     public void setValidite(boolean validite) {
@@ -99,7 +100,12 @@ public class Carte implements Serializable {
     }
     
     public void changerMontantMaxJournalier(int montant) {
-        this.montantMaxJournalier = montant;
+        this.setMontantMaxJournalier(montant);
+    }
+    
+    public void affecterEmploye(Employe employe) {
+        this.setEmploye(employe);
+        employe.setCarte(this);
     }
 
 /*---------------------------------Surcharges---------------------------------*/
@@ -126,7 +132,7 @@ public class Carte implements Serializable {
 
     @Override
     public String toString() {
-        return "modele.Carte[ id carte=" + idCarte + ", id employe=" + idEmploye + ", validite=" + validite + ", montant max journalier=" + montantMaxJournalier + ", solde=" + solde + " ]";
+        return "modele.Carte[ id carte=" + idCarte + ", employe=" + this.getEmploye().getId() + ", validite=" + validite + ", montant max journalier=" + montantMaxJournalier + ", solde=" + solde + " ]";
     }
     
 /*--------------------------------FIN METHODES--------------------------------*/
