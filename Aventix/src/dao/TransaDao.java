@@ -55,9 +55,9 @@ public class TransaDao {
         return liste;
     }
     
-    public List<Transa> findTransaByIdEntreprise(Long idEntreprise){
+    public List<Transa> findTransaByIdCarte(Long idCarte){
         EntityManager em = JpaUtil.getEntityManager();
-        Query query = em.createQuery("select t from transa as t where t.idEntreprise=:idEntreprise").setParameter("idEntreprise", idEntreprise);
+        Query query = em.createQuery("select t from transa as t where t.idCarte=:idCarte").setParameter("idCarte", idCarte);
         List<Transa> liste = query.getResultList();
         return liste;
     }

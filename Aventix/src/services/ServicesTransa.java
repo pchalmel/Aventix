@@ -16,7 +16,7 @@ public interface ServicesTransa {
     public void miseAJourTransa(Transa t);
     public List<Transa> findAllTransas();
     public List<Transa> findTransaByDate(Date dateTransa);
-    public List<Transa> findTransaByIdEntreprise(Long idEntreprise);
+    public List<Transa> findTransaByIdCarte(Long idCarte);
     public Transa findTransaById(Long idTransa);
 }
 

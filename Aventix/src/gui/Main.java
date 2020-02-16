@@ -49,8 +49,11 @@ public class Main {
         services.referencerTransa(transaction1);
         services.referencerTransa(transaction2);
         
+        //Méthodes Employe
+        employe1.demenager("1 rue du Paradis");
+        
         //Affichage de toutes les instances des differentes entités
-        System.out.println(entreprise1.toString());
+        System.out.println(services.findEmployeById(5L).toString());
         System.out.println(entreprise2.toString());
         System.out.println(employe1.toString());
         System.out.println(employe2.toString());

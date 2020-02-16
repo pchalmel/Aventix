@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import services.ServicesImpl;
 
 /*--------------------------------FIN IMPORTS---------------------------------*/
 
@@ -55,8 +56,8 @@ public class Carte implements Serializable {
 /*----------------------------------METHODES----------------------------------*/
 /*----------------------------------Getters-----------------------------------*/
     
-    public int getId() {
-        return hashCode();
+    public Long getId() {
+        return idCarte;
     }
     
     public Employe getEmploye() {
@@ -103,9 +104,14 @@ public class Carte implements Serializable {
         this.setMontantMaxJournalier(montant);
     }
     
+    //Affecter l'employe à la carte
     public void affecterEmploye(Employe employe) {
-        this.setEmploye(employe);
-        employe.setCarte(this);
+        ServicesImpl services = new ServicesImpl();
+        Carte c = this;
+        c.setEmploye(employe);
+        services.miseAJourCarte(c);
+        employe.setCarte(c);
+        services.miseAJourEmploye(employe);
     }
 
 /*---------------------------------Surcharges---------------------------------*/

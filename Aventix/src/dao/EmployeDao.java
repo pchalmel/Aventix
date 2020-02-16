@@ -56,7 +56,7 @@ public class EmployeDao {
     
     public List<Employe> findEmployeByNom(String nom){
         EntityManager em = JpaUtil.getEntityManager();
-        Query query = em.createQuery("select e from employe as e where e.nom=:nom").setParameter("nom", nom);
+        Query query = em.createQuery("select e from Employe as e where e.nom=:nom").setParameter("nom", nom);
         List<Employe> liste = query.getResultList();
         return liste;
     }

@@ -5,6 +5,7 @@ package modele;
 /*----------------------------------IMPORTS-----------------------------------*/
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import services.ServicesImpl;
 
 /*--------------------------------FIN IMPORTS---------------------------------*/
 
@@ -98,8 +100,8 @@ public class Employe implements Serializable {
 /*----------------------------------METHODES----------------------------------*/
 /*----------------------------------Getters-----------------------------------*/
     
-    public int getId() {
-        return hashCode();
+    public Long getId() {
+        return idEmploye;
     }
     
     public String getPrenom() {
@@ -162,20 +164,58 @@ public class Employe implements Serializable {
     
 /*-----------------------------------Others-----------------------------------*/
     
+    //Changer l'adresse de l'employe
     public void demenager(String adresse) {
-        this.setAdresse(adresse);
+        ServicesImpl services = new ServicesImpl();
+        Employe e = services.findEmployeById(this.idEmploye);
+        e.setAdresse(adresse);
+        services.miseAJourEmploye(e);
     }
     
+    //Changer le nom de famille de l'employe
     public void marier(String nom) {
-        this.setNom(nom);
+        ServicesImpl services = new ServicesImpl();
+        Employe e = services.findEmployeById(this.idEmploye);
+        e.setNom(nom);
+        services.miseAJourEmploye(e);
     }
     
+    //Changer l'email du compte de l'employe
     public void changerEmail(String email) {
-        this.setEmail(email);
+        ServicesImpl services = new ServicesImpl();
+        Employe e = services.findEmployeById(this.idEmploye);
+        e.setEmail(email);
+        services.miseAJourEmploye(e);
     }
     
+    //Changer le mot de passe du compte de l'employe
     public void changerPassword(String password) {
-        this.setPassword(password);
+        ServicesImpl services = new ServicesImpl();
+        Employe e = services.findEmployeById(this.idEmploye);
+        e.setPassword(password);
+        services.miseAJourEmploye(e);
+    }
+    
+    //Affecter la carte à l'employe
+    public void affecterCarte(Carte carte) {
+        ServicesImpl services = new ServicesImpl();
+        Employe e = services.findEmployeById(this.idEmploye);
+        e.setCarte(carte);
+        services.miseAJourEmploye(e);
+        carte.setEmploye(e);
+        services.miseAJourCarte(carte);
+    }
+    
+    //Consulter le solde de la carte de l'employe
+    public float consulterSolde() {
+        ServicesImpl services = new ServicesImpl();
+        return services.findCarteByIdEmploye(this.idEmploye).getSolde();
+    }
+    
+    //Consulter toutes les transactions effectuées par l'employe
+    public List<Transa> historiqueTransas() {
+        ServicesImpl services = new ServicesImpl();
+        return services.findTransaByIdCarte(this.getCarte().getId());
     }
 
 /*---------------------------------Surcharges---------------------------------*/
@@ -202,7 +242,7 @@ public class Employe implements Serializable {
     
     @Override
     public String toString() {
-        return "modele.Employe[ idEmploye=" + idEmploye + ", prenom=" + prenom + ", nom=" + nom + ", adresse=" + adresse + ", email=" + email + ", password=" + password + ", entreprise=" + entreprise + ", carte=" + this.getCarte().getId() + " ]";
+        return "modele.Employe[ idEmploye=" + idEmploye + ", prenom=" + prenom + ", nom=" + nom + ", adresse=" + adresse + ", email=" + email + ", password=" + password + ", entreprise=" + entreprise + ", carte=" + carte.getId() + " ]";
     }
     
 /*--------------------------------FIN METHODES--------------------------------*/

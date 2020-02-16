@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+import services.ServicesImpl;
 
 /*--------------------------------FIN IMPORTS---------------------------------*/
 
@@ -63,8 +64,8 @@ public class Entreprise implements Serializable {
 /*----------------------------------METHODES----------------------------------*/
 /*----------------------------------Getters-----------------------------------*/
     
-    public int getId() {
-        return hashCode();
+    public Long getId() {
+        return idEntreprise;
     }
     
     public String getNomEntreprise() {
@@ -111,20 +112,80 @@ public class Entreprise implements Serializable {
     
 /*-----------------------------------Others-----------------------------------*/
     
+    //Changer l'adresse de l'entreprise
     public void demenager(String adresse) {
-        this.setAdresse(adresse);
+        ServicesImpl services = new ServicesImpl();
+        Entreprise e = services.findEntrepriseById(this.idEntreprise);
+        e.setAdresse(adresse);
+        services.miseAJourEntreprise(e);
     }
     
+    //Changer le nom de l'entreprise
     public void changerNom(String nom) {
-        this.setNomEntreprise(nom);
+        ServicesImpl services = new ServicesImpl();
+        Entreprise e = services.findEntrepriseById(this.idEntreprise);
+        e.setNomEntreprise(nom);
+        services.miseAJourEntreprise(e);
     }
     
+    //Changer l'email du compte de l'entreprise
     public void changerEmail(String email) {
-        this.setEmail(email);
+        ServicesImpl services = new ServicesImpl();
+        Entreprise e = services.findEntrepriseById(this.idEntreprise);
+        e.setEmail(email);
+        services.miseAJourEntreprise(e);
     }
     
+    //Changer le mot de passe du compte de l'entreprise
     public void changerPassword(String password) {
-        this.setPassword(password);
+        ServicesImpl services = new ServicesImpl();
+        Entreprise e = services.findEntrepriseById(this.idEntreprise);
+        e.setPassword(password);
+        services.miseAJourEntreprise(e);
+    }
+    
+    //Nouvelle commande de cartes avec commentaire
+    public void nouvelleCommande(long nbCartes, String commentaire) {
+        ServicesImpl services = new ServicesImpl();
+        Commande c = new Commande(this, nbCartes, commentaire);
+        services.referencerCommande(c);
+    }
+    
+    //Nouvelle commande de cartes sans commentaire
+    public void nouvelleCommande(long nbCartes) {
+        ServicesImpl services = new ServicesImpl();
+        Commande c = new Commande(this, nbCartes);
+        services.referencerCommande(c);
+    }
+    
+    //Recharger la carte d'un employe
+    public void rechargerCarte(Employe employe, int montant) {
+        ServicesImpl services = new ServicesImpl();
+        Carte c = services.findCarteByIdEmploye(employe.getId());
+        c.recharger(montant);
+        services.miseAJourCarte(c);
+    }
+    
+    //Recharger une carte
+    public void rechargerCarte(Carte carte, int montant) {
+        ServicesImpl services = new ServicesImpl();
+        carte.recharger(montant);
+        services.miseAJourCarte(carte);
+    }
+    
+    //Changer le montant max journalier d'une carte
+    public void changerMontantMaxJournalier(Carte carte, int montant) {
+        ServicesImpl services = new ServicesImpl();
+        carte.changerMontantMaxJournalier(montant);
+        services.miseAJourCarte(carte);
+    }
+    
+    //Changer le montant max journalier de la carte d'un employe
+    public void changerMontantMaxJournalier(Employe employe, int montant) {
+        ServicesImpl services = new ServicesImpl();
+        Carte c = services.findCarteByIdEmploye(employe.getId());
+        c.changerMontantMaxJournalier(montant);
+        services.miseAJourCarte(c);
     }
 
 /*---------------------------------Surcharges---------------------------------*/

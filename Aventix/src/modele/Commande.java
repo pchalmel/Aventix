@@ -77,8 +77,8 @@ public class Commande implements Serializable {
 /*----------------------------------METHODES----------------------------------*/
 /*----------------------------------Getters-----------------------------------*/
     
-    public int getId() {
-        return hashCode();
+    public Long getId() {
+        return idCommande;
     }
     
     public Entreprise getEntreprise() {

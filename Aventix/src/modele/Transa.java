@@ -63,8 +63,8 @@ public class Transa implements Serializable {
 /*----------------------------------METHODES----------------------------------*/
 /*----------------------------------Getters-----------------------------------*/
     
-    public int getId() {
-        return hashCode();
+    public Long getId() {
+        return idTransa;
     }
     
     public Long getIdCarte() {

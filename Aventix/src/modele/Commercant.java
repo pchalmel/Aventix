@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import services.ServicesImpl;
 
 /*--------------------------------FIN IMPORTS---------------------------------*/
 
@@ -55,8 +56,8 @@ public class Commercant implements Serializable {
 /*----------------------------------METHODES----------------------------------*/
 /*----------------------------------Getters-----------------------------------*/
     
-    public int getId() {
-        return hashCode();
+    public Long getId() {
+        return idCommercant;
     }
     
     public String getNomCommercant() {
@@ -111,24 +112,44 @@ public class Commercant implements Serializable {
     
 /*-----------------------------------Others-----------------------------------*/
     
+    //Changer l'adresse du commerce
     public void demenager(String adresse) {
-        this.setAdresse(adresse);
+        ServicesImpl services = new ServicesImpl();
+        Commercant c = services.findCommercantById(this.getId());
+        c.setAdresse(adresse);
+        services.miseAJourCommercant(c);
     }
     
+    //Changer le nom du commerce
     public void changerNom(String nom) {
-        this.setNomCommercant(nom);
+        ServicesImpl services = new ServicesImpl();
+        Commercant c = services.findCommercantById(this.getId());
+        c.setNomCommercant(nom);
+        services.miseAJourCommercant(c);
     }
     
+    //Changer l'email du compte du commercant
     public void changerEmail(String email) {
-        this.setEmail(email);
+        ServicesImpl services = new ServicesImpl();
+        Commercant c = services.findCommercantById(this.getId());
+        c.setEmail(email);
+        services.miseAJourCommercant(c);
     }
     
+    //Changer le mot de passe du compte du commercant
     public void changerPassword(String password) {
-        this.setPassword(password);
+        ServicesImpl services = new ServicesImpl();
+        Commercant c = services.findCommercantById(this.getId());
+        c.setPassword(password);
+        services.miseAJourCommercant(c);
     }
     
+    //Changer l'IBAN du compte du commercant
     public void changerIban(String iban) {
-        this.setIban(iban);
+        ServicesImpl services = new ServicesImpl();
+        Commercant c = services.findCommercantById(this.getId());
+        c.setIban(iban);
+        services.miseAJourCommercant(c);
     }
 
 /*---------------------------------Surcharges---------------------------------*/
