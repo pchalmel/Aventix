@@ -27,10 +27,10 @@ public class Entreprise implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEntreprise;
     
-    @OneToMany(mappedBy="entreprise", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy="entreprise")
     private Collection<Employe> employes;
     
-    @OneToMany(mappedBy="entreprise", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy="entreprise")
     private Collection<Commande> commandes;
     
     private String nomEntreprise, email, password, adresse, telephone;

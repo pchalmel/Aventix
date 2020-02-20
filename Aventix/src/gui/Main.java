@@ -25,14 +25,10 @@ public class Main {
         Carte carte2 = new Carte(12);
         Employe employe1 = new Employe("Paul", "Chassine", "paul.chassine@hotmail.fr", entreprise1);
         Employe employe2 = new Employe("Nicolas", "Moreau", "ricson.varish@hotmail.fr", entreprise2);
-        carte1.affecterEmploye(employe1);
-        carte2.affecterEmploye(employe2);
         Commercant commercant1 = new Commercant("Miche2Pain", "miche@pain.fr", "9 rue de Brest", "0605782413", "16645997788534461669");
         Commercant commercant2 = new Commercant("KsCrout'", "crout@ks.fr", "79 boulevard Martin", "0674169853", "19765328465925134785");
         Commande commande1 = new Commande(entreprise1, 64, "Plus vite que ca");
         Commande commande2 = new Commande(entreprise2, 24, "Merci");
-        Transa transaction1 = new Transa(5L, 2L, 13);
-        Transa transaction2 = new Transa(6L, 1L, 9);
         
         //Instanciation d'un objet service qui interagira avec la BDD
         ServicesImpl services = new ServicesImpl();
@@ -40,12 +36,18 @@ public class Main {
         //Application du service de referencement en BDD de toutes les instances des differentes entités
         services.referencerEntreprise(entreprise1);
         services.referencerEntreprise(entreprise2);
-        services.referencerCommande(commande1);
-        services.referencerCommande(commande2);
         services.referencerCommercant(commercant1);
         services.referencerCommercant(commercant2);
         services.referencerEmploye(employe1);
         services.referencerEmploye(employe2);
+        services.referencerCarte(carte1);
+        services.referencerCarte(carte2);
+        services.referencerCommande(commande1);
+        services.referencerCommande(commande2);
+        carte1.affecterEmploye(employe1);
+        carte2.affecterEmploye(employe2);
+        Transa transaction1 = new Transa(employe1.getCarte().getId(), commercant2.getId(), 13);
+        Transa transaction2 = new Transa(employe2.getCarte().getId(), commercant1.getId(), 9);
         services.referencerTransa(transaction1);
         services.referencerTransa(transaction2);
         
@@ -65,7 +67,7 @@ public class Main {
         System.out.println(commande2.toString());
         System.out.println(transaction1.toString());
         System.out.println(transaction2.toString());
-        System.out.println(services.findEmployeById(5L).toString());
+        System.out.println(services.findEmployeById(employe1.getId()).toString());
         System.out.println(employe1.historiqueTransas().toString());
     }
 

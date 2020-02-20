@@ -7,6 +7,7 @@ package modele;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,7 +31,7 @@ public class Employe implements Serializable {
     @ManyToOne
     private Entreprise entreprise;
     
-    @OneToOne(mappedBy="employe", cascade = CascadeType.PERSIST)
+    @OneToOne
     private Carte carte;
     
     private String prenom, nom, adresse, email, password;
@@ -242,7 +243,7 @@ public class Employe implements Serializable {
     
     @Override
     public String toString() {
-        return "modele.Employe[ idEmploye=" + idEmploye + ", prenom=" + prenom + ", nom=" + nom + ", adresse=" + adresse + ", email=" + email + ", password=" + password + ", entreprise=" + entreprise + ", carte=" + carte.getId() + " ]";
+        return "modele.Employe[ idEmploye=" + idEmploye + ", prenom=" + prenom + ", nom=" + nom + ", adresse=" + adresse + ", email=" + email + ", password=" + password + ", entreprise=" + entreprise + ", carte=" + carte + " ]";
     }
     
 /*--------------------------------FIN METHODES--------------------------------*/

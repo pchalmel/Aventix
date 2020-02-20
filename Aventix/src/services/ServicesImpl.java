@@ -13,7 +13,7 @@ import util.JpaUtil;
 
 /*--------------------------------FIN IMPORTS---------------------------------*/
 
-public class ServicesImpl implements ServicesEmploye, ServicesEntreprise, ServicesCommercant, ServicesCommande, ServicesCarte {
+public class ServicesImpl implements ServicesEmploye, ServicesEntreprise, ServicesCommercant, ServicesCommande, ServicesCarte, ServicesServiceFacturation {
       
 /*--------------------------------ENTREPRISES---------------------------------*/
     
@@ -492,6 +492,74 @@ public class ServicesImpl implements ServicesEmploye, ServicesEntreprise, Servic
     }
     
 /*------------------------------FIN TRANSACTIONS------------------------------*/
+    
+/*----------------------------SERVICE FACTURATION-----------------------------*/
+    
+    public void referencerServiceFacturation(ServiceFacturation sF) {
+        ServiceFacturationDao dao = new ServiceFacturationDao();
+        EntityTransaction tx = null;
+        try{
+            tx = JpaUtil.getEntityTransaction();
+            tx.begin();
+            dao.createServiceFacturation(sF);
+            tx.commit();
+        }catch(Exception ex){
+            ex.printStackTrace();
+            if(tx != null && tx.isActive()){
+                tx.rollback();
+            }
+        }finally{
+            JpaUtil.closeEntityManager();
+        }
+    }
+    
+    public void dereferencerServiceFacturation(ServiceFacturation sF) {
+        ServiceFacturationDao dao = new ServiceFacturationDao();
+        EntityTransaction tx = null;
+        try{
+            tx = JpaUtil.getEntityTransaction();
+            tx.begin();
+            dao.deleteServiceFacturation(sF);
+            tx.commit();
+        }catch(Exception ex){
+            ex.printStackTrace();
+            if(tx != null && tx.isActive()){
+                tx.rollback();
+            }
+        }finally{
+            JpaUtil.closeEntityManager();
+        }
+    }
+    
+    public void miseAJourServiceFacturation(ServiceFacturation sF) {
+        ServiceFacturationDao dao = new ServiceFacturationDao();
+        EntityTransaction tx = null;
+        try{
+            tx = JpaUtil.getEntityTransaction();
+            tx.begin();
+            dao.updateServiceFacturation(sF);
+            tx.commit();
+        }catch(Exception ex){
+            ex.printStackTrace();
+            if(tx != null && tx.isActive()){
+                tx.rollback();
+            }
+        }finally{
+            JpaUtil.closeEntityManager();
+        }
+    }
+    
+    public ServiceFacturation findServiceFacturationById(Long idServiceFacturation) {
+        ServiceFacturationDao dao = new ServiceFacturationDao();
+        return dao.findServiceFacturationById(idServiceFacturation);
+    }
+    
+    public ServiceFacturation findServiceFacturationByEmail(String email) {
+        ServiceFacturationDao dao = new ServiceFacturationDao();
+        return dao.findServiceFacturationByEmail(email);
+    }
+    
+/*---------------------------FIN SERVICE FACTURATION--------------------------*/
     
 }
 
