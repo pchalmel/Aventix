@@ -37,7 +37,7 @@ public class EmployeDao {
     
     public List<Employe> findAllEmployes(){
         EntityManager em = JpaUtil.getEntityManager();
-        Query query = em.createQuery("select e from employe as e");
+        Query query = em.createQuery("select e from Employe as e");
         List<Employe> liste = query.getResultList();
         return liste;
     }
@@ -49,7 +49,7 @@ public class EmployeDao {
     
     public List<Employe> findEmployeByPrenom(String prenom){
         EntityManager em = JpaUtil.getEntityManager();
-        Query query = em.createQuery("select e from employe as e where e.prenom=:prenom").setParameter("prenom", prenom);
+        Query query = em.createQuery("select e from Employe as e where e.prenom=:prenom").setParameter("prenom", prenom);
         List<Employe> liste = query.getResultList();
         return liste;
     }
@@ -63,7 +63,7 @@ public class EmployeDao {
     
     public List<Employe> findEmployeByEntreprise(Long idEntreprise){
         EntityManager em = JpaUtil.getEntityManager();
-        Query query = em.createQuery("select e from employe as e where e.idEntreprise=:idEntreprise").setParameter("idEntreprise", idEntreprise);
+        Query query = em.createQuery("select e from Employe as e where e.idEntreprise=:idEntreprise").setParameter("idEntreprise", idEntreprise);
         List<Employe> liste = query.getResultList();
         return liste;
     }

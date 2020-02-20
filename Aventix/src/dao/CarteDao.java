@@ -38,7 +38,7 @@ public class CarteDao {
     
     public List<Carte> findAllCartes(){
         EntityManager em = JpaUtil.getEntityManager();
-        Query query = em.createQuery("select c from carte as c");
+        Query query = em.createQuery("select c from Carte as c");
         List<Carte> liste = query.getResultList();
         return liste;
     }

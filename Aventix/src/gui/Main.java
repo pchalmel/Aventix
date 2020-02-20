@@ -31,8 +31,8 @@ public class Main {
         Commercant commercant2 = new Commercant("KsCrout'", "crout@ks.fr", "79 boulevard Martin", "0674169853", "19765328465925134785");
         Commande commande1 = new Commande(entreprise1, 64, "Plus vite que ca");
         Commande commande2 = new Commande(entreprise2, 24, "Merci");
-        Transa transaction1 = new Transa(1L, 2L, 13);
-        Transa transaction2 = new Transa(2L, 1L, 9);
+        Transa transaction1 = new Transa(5L, 2L, 13);
+        Transa transaction2 = new Transa(6L, 1L, 9);
         
         //Instanciation d'un objet service qui interagira avec la BDD
         ServicesImpl services = new ServicesImpl();
@@ -53,7 +53,7 @@ public class Main {
         employe1.demenager("1 rue du Paradis");
         
         //Affichage de toutes les instances des differentes entités
-        System.out.println(services.findEmployeById(5L).toString());
+        System.out.println(entreprise1.toString());
         System.out.println(entreprise2.toString());
         System.out.println(employe1.toString());
         System.out.println(employe2.toString());
@@ -65,6 +65,8 @@ public class Main {
         System.out.println(commande2.toString());
         System.out.println(transaction1.toString());
         System.out.println(transaction2.toString());
+        System.out.println(services.findEmployeById(5L).toString());
+        System.out.println(employe1.historiqueTransas().toString());
     }
 
 }

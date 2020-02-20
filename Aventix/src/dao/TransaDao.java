@@ -38,7 +38,7 @@ public class TransaDao {
     
     public List<Transa> findAllTransas(){
         EntityManager em = JpaUtil.getEntityManager();
-        Query query = em.createQuery("select t from transa as t");
+        Query query = em.createQuery("select t from Transa as t");
         List<Transa> liste = query.getResultList();
         return liste;
     }
@@ -50,14 +50,14 @@ public class TransaDao {
     
     public List<Transa> findTransaByDate(Date dateTransa){
         EntityManager em = JpaUtil.getEntityManager();
-        Query query = em.createQuery("select t from transa as t where t.dateTransa=:dateTransa").setParameter("dateTransa", dateTransa);
+        Query query = em.createQuery("select t from Transa as t where t.dateTransa=:dateTransa").setParameter("dateTransa", dateTransa);
         List<Transa> liste = query.getResultList();
         return liste;
     }
     
     public List<Transa> findTransaByIdCarte(Long idCarte){
         EntityManager em = JpaUtil.getEntityManager();
-        Query query = em.createQuery("select t from transa as t where t.idCarte=:idCarte").setParameter("idCarte", idCarte);
+        Query query = em.createQuery("select t from Transa as t where t.idCarte=:idCarte").setParameter("idCarte", idCarte);
         List<Transa> liste = query.getResultList();
         return liste;
     }

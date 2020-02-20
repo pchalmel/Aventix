@@ -37,7 +37,7 @@ public class EntrepriseDao {
     
     public List<Entreprise> findAllEntreprises(){
         EntityManager em = JpaUtil.getEntityManager();
-        Query query = em.createQuery("select e from entreprise as e");
+        Query query = em.createQuery("select e from Entreprise as e");
         List<Entreprise> liste = query.getResultList();
         return liste;
     }

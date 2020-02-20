@@ -37,7 +37,7 @@ public class CommercantDao {
     
     public List<Commercant> findAllCommercants(){
         EntityManager em = JpaUtil.getEntityManager();
-        Query query = em.createQuery("select c from commercant as c");
+        Query query = em.createQuery("select c from Commercant as c");
         List<Commercant> liste = query.getResultList();
         return liste;
     }

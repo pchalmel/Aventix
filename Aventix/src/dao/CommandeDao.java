@@ -38,7 +38,7 @@ public class CommandeDao {
     
     public List<Commande> findAllCommandes(){
         EntityManager em = JpaUtil.getEntityManager();
-        Query query = em.createQuery("select c from commande as c");
+        Query query = em.createQuery("select c from Commande as c");
         List<Commande> liste = query.getResultList();
         return liste;
     }
@@ -50,14 +50,14 @@ public class CommandeDao {
     
     public List<Commande> findCommandeByDate(Date dateCommande){
         EntityManager em = JpaUtil.getEntityManager();
-        Query query = em.createQuery("select c from commande as c where c.dateCommande=:dateCommande").setParameter("dateCommande", dateCommande);
+        Query query = em.createQuery("select c from Commande as c where c.dateCommande=:dateCommande").setParameter("dateCommande", dateCommande);
         List<Commande> liste = query.getResultList();
         return liste;
     }
     
     public List<Commande> findCommandeByIdEntreprise(Long idEntreprise){
         EntityManager em = JpaUtil.getEntityManager();
-        Query query = em.createQuery("select c from commande as c where c.idEntreprise=:idEntreprise").setParameter("idEntreprise", idEntreprise);
+        Query query = em.createQuery("select c from Commande as c where c.idEntreprise=:idEntreprise").setParameter("idEntreprise", idEntreprise);
         List<Commande> liste = query.getResultList();
         return liste;
     }
