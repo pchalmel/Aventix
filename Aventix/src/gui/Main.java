@@ -4,11 +4,13 @@ package gui;
 
 /*----------------------------------IMPORTS-----------------------------------*/
 
+import javax.mail.MessagingException;
 import modele.Carte;
 import modele.Commande;
 import modele.Commercant;
 import modele.Employe;
 import modele.Entreprise;
+import modele.ServiceFacturation;
 import modele.Transa;
 import services.ServicesImpl;
 
@@ -16,7 +18,7 @@ import services.ServicesImpl;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws MessagingException {
         
         //Instanciation de 2 objets de chaque entité
         Entreprise entreprise1 = new Entreprise("Sodexo", "sodexo@sodex.fr", "19 rue de l'Yvette", "0161457884");
@@ -69,6 +71,9 @@ public class Main {
         System.out.println(transaction2.toString());
         System.out.println(services.findEmployeById(employe1.getId()).toString());
         System.out.println(employe1.historiqueTransas().toString());
+        
+        ServiceFacturation sF1 = new ServiceFacturation();
+        sF1.envoyerFacture(commande2);
     }
 
 }

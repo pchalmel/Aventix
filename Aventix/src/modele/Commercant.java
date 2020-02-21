@@ -151,6 +151,13 @@ public class Commercant implements Serializable {
         c.setIban(iban);
         services.miseAJourCommercant(c);
     }
+    
+    //Verification password
+    public boolean verifLogin(String email, String password) {
+        ServicesImpl services = new ServicesImpl();
+        Commercant c = services.findCommercantByEmail(this.email);    
+        return (c.password.equals(password));
+    }
 
 /*---------------------------------Surcharges---------------------------------*/
 

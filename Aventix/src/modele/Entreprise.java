@@ -187,6 +187,13 @@ public class Entreprise implements Serializable {
         c.changerMontantMaxJournalier(montant);
         services.miseAJourCarte(c);
     }
+    
+    //Verification password
+    public boolean verifLogin(String email, String password) {
+        ServicesImpl services = new ServicesImpl();
+        Entreprise e = services.findEntrepriseByEmail(this.email);    
+        return (e.password.equals(password));
+    }
 
 /*---------------------------------Surcharges---------------------------------*/
 

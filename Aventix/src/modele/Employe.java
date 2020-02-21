@@ -218,6 +218,13 @@ public class Employe implements Serializable {
         ServicesImpl services = new ServicesImpl();
         return services.findTransaByIdCarte(this.getCarte().getId());
     }
+    
+    //Verification password
+    public boolean verifLogin(String email, String password) {
+        ServicesImpl services = new ServicesImpl();
+        Employe e = services.findEmployeByEmail(this.email);    
+        return (e.password.equals(password));
+    }
 
 /*---------------------------------Surcharges---------------------------------*/
 

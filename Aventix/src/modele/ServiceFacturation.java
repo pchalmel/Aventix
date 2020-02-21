@@ -4,12 +4,20 @@ package modele;
 
 /*----------------------------------IMPORTS-----------------------------------*/
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Serializable;
+import java.io.Writer;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import services.ServicesImpl;
+import javax.mail.*;
+import javax.mail.internet.*;
+import java.util.Properties;
+import javax.mail.internet.MimeMessage;
 
 /*--------------------------------FIN IMPORTS---------------------------------*/
 
@@ -87,6 +95,47 @@ public class ServiceFacturation implements Serializable {
         sF.setPassword(password);
         services.miseAJourServiceFacturation(sF);
     }
+    
+    //Verification password
+    public boolean verifLogin(String email, String password) {
+        ServicesImpl services = new ServicesImpl();
+        ServiceFacturation sF = services.findServiceFacturationByEmail(this.email);    
+        return (sF.password.equals(password));
+    }
+    
+    //Envoyer la facture d'une commande
+    public void envoyerFacture(Commande c) throws AddressException, MessagingException {
+        ServicesImpl services = new ServicesImpl();
+        Commande commande = services.findCommandeById(c.getId());
+        //Envoi de l'email
+        String smtpHost = "smtp.office365.com";
+        String from = "olivier.cinquin@hotmail.fr";
+        String to = "olivier.cinquin@insa-lyon.fr";
+        String username = "olivier.cinquin@hotmail.fr";
+        String passwordMail = "LnXyKJRsA4862!";
+
+        Properties props = new Properties();
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.host", smtpHost);
+        props.put("mail.smtp.enable", "true");
+        props.put("mail.smtp.starttls.required", "true");
+        props.put("mail.smtp.auth", "true");
+
+        Session session = Session.getDefaultInstance(props);
+        session.setDebug(true);
+
+        MimeMessage message = new MimeMessage(session);   
+        message.setFrom(new InternetAddress(from));
+        message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+        message.setSubject("Facture commande N° " + c.getId());
+        message.setText("Commande N° " + c.getId() + "\n\nDate commande : " + c.getDateCommande() + "\n\nEntreprise N° " + c.getEntreprise().getId() + "\n\nNom entreprise : " + c.getEntreprise().getNomEntreprise() + "\n\nNombre de cartes commandees : " + c.getNbCartes() + "\n\nMontant total TTC : " + c.getMontantTotal() + " euros" + "\n\nCommentaires : " + c.getCommentaires());
+
+        Transport tr = session.getTransport("smtp");
+        tr.connect(smtpHost, username, passwordMail);
+        message.saveChanges();
+        tr.sendMessage(message,message.getAllRecipients());
+        tr.close();
+        }
 
 /*---------------------------------Surcharges---------------------------------*/
 
