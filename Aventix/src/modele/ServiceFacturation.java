@@ -107,12 +107,12 @@ public class ServiceFacturation implements Serializable {
     public void envoyerFacture(Commande c) throws AddressException, MessagingException {
         ServicesImpl services = new ServicesImpl();
         Commande commande = services.findCommandeById(c.getId());
-        //Envoi de l'email
-        String smtpHost = "smtp.office365.com";
-        String from = "olivier.cinquin@hotmail.fr";
-        String to = "olivier.cinquin@insa-lyon.fr";
-        String username = "olivier.cinquin@hotmail.fr";
-        String passwordMail = "LnXyKJRsA4862!";
+        //Configuration du serveur smtp
+        String smtpHost = "smtp.gmail.com";
+        String from = "service.facturation.aventix@gmail.com";
+        String to = commande.getEntreprise().getEmail();
+        String username = "service.facturation.aventix@gmail.com";
+        String passwordMail = "aventix2020";
 
         Properties props = new Properties();
         props.put("mail.smtp.port", "587");
@@ -123,7 +123,8 @@ public class ServiceFacturation implements Serializable {
 
         Session session = Session.getDefaultInstance(props);
         session.setDebug(true);
-
+        
+        //Redaction du message
         MimeMessage message = new MimeMessage(session);   
         message.setFrom(new InternetAddress(from));
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
@@ -168,4 +169,4 @@ public class ServiceFacturation implements Serializable {
     
 }
 
-                            /*Fin classe ServiceFacturation*/
+                        /*Fin classe ServiceFacturation*/
