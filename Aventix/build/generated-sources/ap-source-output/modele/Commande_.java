@@ -7,7 +7,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import modele.Entreprise;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2020-02-21T14:16:22")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2020-02-24T19:33:27")
 @StaticMetamodel(Commande.class)
 public class Commande_ { 
 
@@ -19,5 +19,6 @@ public class Commande_ {
     public static volatile SingularAttribute<Commande, String> commentaires;
     public static volatile SingularAttribute<Commande, Date> dateCommande;
     public static volatile SingularAttribute<Commande, Long> idCommande;
+    public static volatile SingularAttribute<Commande, Boolean> statut;
 
 }

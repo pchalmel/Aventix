@@ -5,6 +5,7 @@ package modele;
 /*----------------------------------IMPORTS-----------------------------------*/
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -155,8 +156,14 @@ public class Commercant implements Serializable {
     //Verification password
     public boolean verifLogin(String email, String password) {
         ServicesImpl services = new ServicesImpl();
-        Commercant c = services.findCommercantByEmail(this.email);    
-        return (c.password.equals(password));
+        Commercant c = services.findCommercantByEmail(this.getEmail());    
+        return (c.getPassword().equals(password));
+    }
+    
+    //Afficher l'historique des transactions
+    public List<Transa> historiqueTransas() {
+        ServicesImpl services = new ServicesImpl();
+        return services.findTransaByIdCommercant(this.getId());
     }
 
 /*---------------------------------Surcharges---------------------------------*/

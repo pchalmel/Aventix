@@ -491,6 +491,11 @@ public class ServicesImpl implements ServicesEmploye, ServicesEntreprise, Servic
         return dao.findTransaByIdCarte(idCarte);
     }
     
+    public List<Transa> findTransaByIdCommercant(Long idCommercant) {
+        TransaDao dao = new TransaDao();
+        return dao.findTransaByIdCommercant(idCommercant);
+    }
+    
 /*------------------------------FIN TRANSACTIONS------------------------------*/
     
 /*----------------------------SERVICE FACTURATION-----------------------------*/

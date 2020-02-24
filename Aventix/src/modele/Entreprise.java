@@ -6,13 +6,20 @@ package modele;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.CascadeType;
+import java.util.Date;
+import java.util.Properties;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 import services.ServicesImpl;
 
 /*--------------------------------FIN IMPORTS---------------------------------*/
@@ -115,7 +122,7 @@ public class Entreprise implements Serializable {
     //Changer l'adresse de l'entreprise
     public void demenager(String adresse) {
         ServicesImpl services = new ServicesImpl();
-        Entreprise e = services.findEntrepriseById(this.idEntreprise);
+        Entreprise e = services.findEntrepriseById(this.getId());
         e.setAdresse(adresse);
         services.miseAJourEntreprise(e);
     }
@@ -123,7 +130,7 @@ public class Entreprise implements Serializable {
     //Changer le nom de l'entreprise
     public void changerNom(String nom) {
         ServicesImpl services = new ServicesImpl();
-        Entreprise e = services.findEntrepriseById(this.idEntreprise);
+        Entreprise e = services.findEntrepriseById(this.getId());
         e.setNomEntreprise(nom);
         services.miseAJourEntreprise(e);
     }
@@ -131,7 +138,7 @@ public class Entreprise implements Serializable {
     //Changer l'email du compte de l'entreprise
     public void changerEmail(String email) {
         ServicesImpl services = new ServicesImpl();
-        Entreprise e = services.findEntrepriseById(this.idEntreprise);
+        Entreprise e = services.findEntrepriseById(this.getId());
         e.setEmail(email);
         services.miseAJourEntreprise(e);
     }
@@ -139,7 +146,7 @@ public class Entreprise implements Serializable {
     //Changer le mot de passe du compte de l'entreprise
     public void changerPassword(String password) {
         ServicesImpl services = new ServicesImpl();
-        Entreprise e = services.findEntrepriseById(this.idEntreprise);
+        Entreprise e = services.findEntrepriseById(this.getId());
         e.setPassword(password);
         services.miseAJourEntreprise(e);
     }
@@ -147,14 +154,16 @@ public class Entreprise implements Serializable {
     //Nouvelle commande de cartes avec commentaire
     public void nouvelleCommande(long nbCartes, String commentaire) {
         ServicesImpl services = new ServicesImpl();
-        Commande c = new Commande(this, nbCartes, commentaire);
+        Entreprise e = services.findEntrepriseById(this.getId());
+        Commande c = new Commande(e, nbCartes, commentaire);
         services.referencerCommande(c);
     }
     
     //Nouvelle commande de cartes sans commentaire
     public void nouvelleCommande(long nbCartes) {
         ServicesImpl services = new ServicesImpl();
-        Commande c = new Commande(this, nbCartes);
+        Entreprise e = services.findEntrepriseById(this.getId());
+        Commande c = new Commande(e, nbCartes);
         services.referencerCommande(c);
     }
     
@@ -191,8 +200,58 @@ public class Entreprise implements Serializable {
     //Verification password
     public boolean verifLogin(String email, String password) {
         ServicesImpl services = new ServicesImpl();
-        Entreprise e = services.findEntrepriseByEmail(this.email);    
-        return (e.password.equals(password));
+        Entreprise e = services.findEntrepriseByEmail(this.getEmail());    
+        return (e.getPassword().equals(password));
+    }
+    
+    //Ajout d'un nouvel employe
+    public void nouvelEmploye(Employe e) throws AddressException, MessagingException {
+        ServicesImpl services = new ServicesImpl();
+        services.referencerEmploye(e);
+        //Configuration du serveur smtp
+        String smtpHost = "smtp.gmail.com";
+        String to = e.getEmail();
+
+        Properties props = new Properties();
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.host", smtpHost);
+        props.put("mail.smtp.enable", "true");
+        props.put("mail.smtp.starttls.required", "true");
+        props.put("mail.smtp.auth", "true");
+
+        Session session = Session.getDefaultInstance(props);
+        session.setDebug(true);
+        
+        //Redaction du message
+        MimeMessage message = new MimeMessage(session);
+        ServiceFacturation sF = services.findServiceFacturationById(1L);
+        message.setFrom(new InternetAddress(sF.getEmail()));
+        message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+        message.setSubject("Bienvenue dans le systeme Aventix !");
+        message.setText("Bonjour " + e.getPrenom() + ",\n\nBienvenue dans le systeme de paiement Aventix, votre login et mot de passe sont les suivant (ne jamais communiquer a quiconque sous aucun pretexte) :\n\nLogin : " + e.getEmail() + "\nMot de passe : " + e.getPassword() + "\n\nVeuillez changer de mot de passe immediatement apres lecture de ce mail.\n\nCordialement,\nL'equipe Aventix");
+        Transport tr = session.getTransport("smtp");
+        tr.connect(smtpHost, sF.getEmail(), sF.getPassword());
+        message.saveChanges();
+        tr.sendMessage(message,message.getAllRecipients());
+        tr.close();
+    }
+    
+    //Modifier la commande (dans les 5 jours)
+    public void modifierCommande(Commande c) {
+        ServicesImpl services = new ServicesImpl();
+        Date now = new Date();
+        if (services.findCommandeById(c.getId()).ajouterJour(services.findCommandeById(c.getId()).getDateCommande(), 5).after(now)) {
+            services.miseAJourCommande(c);
+        }
+    }
+    
+    //Annuler une commande
+    public void annulerCommande(Commande c) {
+        ServicesImpl services = new ServicesImpl();
+        Date now = new Date();
+        if (services.findCommandeById(c.getId()).ajouterJour(services.findCommandeById(c.getId()).getDateCommande(), 5).after(now)) {
+            services.dereferencerCommande(c);
+        }
     }
 
 /*---------------------------------Surcharges---------------------------------*/

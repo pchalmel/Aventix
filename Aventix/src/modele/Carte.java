@@ -107,7 +107,7 @@ public class Carte implements Serializable {
     //Affecter l'employe à la carte
     public void affecterEmploye(Employe employe) {
         ServicesImpl services = new ServicesImpl();
-        Carte c = this;
+        Carte c = services.findCarteById(this.getId());
         c.setEmploye(employe);
         services.miseAJourCarte(c);
         employe.setCarte(c);

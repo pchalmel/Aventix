@@ -6,8 +6,14 @@ package modele;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
+import java.util.Properties;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -94,6 +100,48 @@ public class Employe implements Serializable {
         this.email = email;
         this.password = (this.getNom() + this.getPrenom() + "@" + "2020").replace(" ", "");
         this.entreprise = entreprise;
+    }
+    
+//Constructeur par valeurs 5
+    
+    public Employe(String prenom, String nom, String adresse, String email) {
+        this.prenom = prenom;
+        this.nom = nom;
+        this.adresse = adresse;
+        this.email = email;
+        this.password = (this.getNom() + this.getPrenom() + "@" + "2020").replace(" ", "");
+    }
+    
+//Constructeur par valeurs 6
+    
+    public Employe(String prenom, String nom, String email) {
+        this.prenom = prenom;
+        this.nom = nom;
+        this.adresse = "";
+        this.email = email;
+        this.password = (this.getNom() + this.getPrenom() + "@" + "2020").replace(" ", "");
+    }
+    
+//Constructeur par valeurs 7
+    
+    public Employe(String prenom, String nom, String adresse, String email, Carte carte) {
+        this.prenom = prenom;
+        this.nom = nom;
+        this.adresse = adresse;
+        this.email = email;
+        this.password = (this.getNom() + this.getPrenom() + "@" + "2020").replace(" ", "");
+        this.carte = carte;
+    }
+    
+//Constructeur par valeurs 8
+    
+    public Employe(String prenom, String nom, String email, Carte carte) {
+        this.prenom = prenom;
+        this.nom = nom;
+        this.adresse = "";
+        this.email = email;
+        this.password = (this.getNom() + this.getPrenom() + "@" + "2020").replace(" ", "");
+        this.carte = carte;
     }
     
 /*-----------------------------FIN CONSTRUCTEURS------------------------------*/
@@ -222,8 +270,40 @@ public class Employe implements Serializable {
     //Verification password
     public boolean verifLogin(String email, String password) {
         ServicesImpl services = new ServicesImpl();
-        Employe e = services.findEmployeByEmail(this.email);    
+        Employe e = services.findEmployeByEmail(this.email);
         return (e.password.equals(password));
+    }
+    
+    //Mot de passe oublie
+    public void passwordOublie() throws AddressException, MessagingException {
+        ServicesImpl services = new ServicesImpl();
+        Employe e = services.findEmployeById(this.idEmploye);
+        //Configuration du serveur smtp
+        String smtpHost = "smtp.gmail.com";
+        String to = e.getEmail();
+
+        Properties props = new Properties();
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.host", smtpHost);
+        props.put("mail.smtp.enable", "true");
+        props.put("mail.smtp.starttls.required", "true");
+        props.put("mail.smtp.auth", "true");
+
+        Session session = Session.getDefaultInstance(props);
+        session.setDebug(true);
+        
+        //Redaction du message
+        MimeMessage message = new MimeMessage(session);
+        ServiceFacturation sF = services.findServiceFacturationById(1L);
+        message.setFrom(new InternetAddress(sF.getEmail()));
+        message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+        message.setSubject("Nouveau mot de passe");
+        message.setText("Vous recevez ce mail si vous avez oublie votre mot de passe. Si ce n'est pas votre demarche, contactez votre administrateur.\n\nVotre mot de passe est : " + e.getPassword() + "\n\nIl vous est conseille de changer votre mot de passe des maintenant.");
+        Transport tr = session.getTransport("smtp");
+        tr.connect(smtpHost, sF.getEmail(), sF.getPassword());
+        message.saveChanges();
+        tr.sendMessage(message,message.getAllRecipients());
+        tr.close();
     }
 
 /*---------------------------------Surcharges---------------------------------*/

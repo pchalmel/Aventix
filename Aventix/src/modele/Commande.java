@@ -6,6 +6,7 @@ package modele;
 
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,6 +35,7 @@ public class Commande implements Serializable {
     private String commentaires;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateCommande;
+    private boolean statut;
     //@Transient
     private DateFormat shortDateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
     //@Transient
@@ -50,6 +52,7 @@ public class Commande implements Serializable {
         this.nbCartes = 0;
         this.montantTotal = 0;
         this.commentaires = "";
+        this.statut = false;
     }
     
 //Constructeur par valeurs 1
@@ -60,6 +63,7 @@ public class Commande implements Serializable {
         this.nbCartes = nbCartes;
         this.montantTotal = nbCartes * prixUnitaire;
         this.commentaires = commentaires;
+        this.statut = false;
     }
     
 //Constructeur par valeurs 2
@@ -70,6 +74,7 @@ public class Commande implements Serializable {
         this.nbCartes = nbCartes;
         this.montantTotal = nbCartes * prixUnitaire;
         this.commentaires = "";
+        this.statut = false;
     }
     
 /*-----------------------------FIN CONSTRUCTEURS------------------------------*/
@@ -101,6 +106,10 @@ public class Commande implements Serializable {
         return commentaires;
     }
     
+    public boolean getStatut() {
+        return statut;
+    }
+    
 /*----------------------------------Setters-----------------------------------*/
     
     public void setEntreprise(Entreprise entreprise) {
@@ -115,9 +124,19 @@ public class Commande implements Serializable {
         this.commentaires = commentaires;
     }
     
-/*-----------------------------------Others-----------------------------------*/
+    public void setStatut(boolean statut) {
+        this.statut = statut;
+    }
     
+/*-----------------------------------Others-----------------------------------*/
 
+    //Ajoute un nombre de jour a une date
+    public Date ajouterJour(Date date, int nbJour) { 
+        Calendar cal = Calendar.getInstance(); 
+        cal.setTime(date);
+        cal.add(Calendar.DATE, nbJour);
+        return cal.getTime();
+    }
 
 /*---------------------------------Surcharges---------------------------------*/
 
@@ -143,7 +162,7 @@ public class Commande implements Serializable {
 
     @Override
     public String toString() {
-        return "modele.Commande[ id commande=" + idCommande + ", entreprise=" + this.getEntreprise().getNomEntreprise() + ", date=" + shortDateFormat.format(dateCommande) + ", nb cartes=" + nbCartes + ", montant total=" + montantTotal + ", commentaires=" + commentaires + " ]";
+        return "modele.Commande[ id commande=" + idCommande + ", entreprise=" + this.getEntreprise().getNomEntreprise() + ", date=" + shortDateFormat.format(dateCommande) + ", nb cartes=" + nbCartes + ", montant total=" + montantTotal + ", commentaires=" + commentaires + ", statut=" + statut + " ]";
     }
     
 /*--------------------------------FIN METHODES--------------------------------*/

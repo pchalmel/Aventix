@@ -17,6 +17,7 @@ public interface ServicesTransa {
     public List<Transa> findAllTransas();
     public List<Transa> findTransaByDate(Date dateTransa);
     public List<Transa> findTransaByIdCarte(Long idCarte);
+    public List<Transa> findTransaByIdCommercant(Long idCommercant);
     public Transa findTransaById(Long idTransa);
 }
 

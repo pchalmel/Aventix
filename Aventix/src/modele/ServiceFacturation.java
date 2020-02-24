@@ -4,11 +4,8 @@ package modele;
 
 /*----------------------------------IMPORTS-----------------------------------*/
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.Serializable;
-import java.io.Writer;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -40,16 +37,11 @@ public class ServiceFacturation implements Serializable {
 //Constructeur par défault
     
     public ServiceFacturation() {
-        this.email = "";
-        this.password = "";
+        this.email = "service.facturation.aventix@gmail.com";
+        this.password = "aventix2020";
     }
     
-//Constructeur par valeurs
-    
-    public ServiceFacturation(String email) {
-        this.email = email;
-        this.password = "guest";
-    }    
+//Constructeur par valeurs 
     
 /*-----------------------------FIN CONSTRUCTEURS------------------------------*/
     
@@ -83,7 +75,7 @@ public class ServiceFacturation implements Serializable {
     //Changer l'email du compte du ServiceFacturation
     public void changerEmail(String email) {
         ServicesImpl services = new ServicesImpl();
-        ServiceFacturation sF = services.findServiceFacturationById(this.idServiceFacturation);
+        ServiceFacturation sF = services.findServiceFacturationById(this.getId());
         sF.setEmail(email);
         services.miseAJourServiceFacturation(sF);
     }
@@ -91,7 +83,7 @@ public class ServiceFacturation implements Serializable {
     //Changer le mot de passe du compte de l'employe
     public void changerPassword(String password) {
         ServicesImpl services = new ServicesImpl();
-        ServiceFacturation sF = services.findServiceFacturationById(this.idServiceFacturation);
+        ServiceFacturation sF = services.findServiceFacturationById(this.getId());
         sF.setPassword(password);
         services.miseAJourServiceFacturation(sF);
     }
@@ -99,8 +91,14 @@ public class ServiceFacturation implements Serializable {
     //Verification password
     public boolean verifLogin(String email, String password) {
         ServicesImpl services = new ServicesImpl();
-        ServiceFacturation sF = services.findServiceFacturationByEmail(this.email);    
-        return (sF.password.equals(password));
+        ServiceFacturation sF = services.findServiceFacturationByEmail(this.getEmail());    
+        return (sF.getPassword().equals(password));
+    }
+    
+    //Afficher l'historique des commandes
+    public List<Commande> historiqueCommandes() {
+        ServicesImpl services = new ServicesImpl();
+        return services.findAllCommandes();
     }
     
     //Envoyer la facture d'une commande
@@ -109,10 +107,7 @@ public class ServiceFacturation implements Serializable {
         Commande commande = services.findCommandeById(c.getId());
         //Configuration du serveur smtp
         String smtpHost = "smtp.gmail.com";
-        String from = "service.facturation.aventix@gmail.com";
         String to = commande.getEntreprise().getEmail();
-        String username = "service.facturation.aventix@gmail.com";
-        String passwordMail = "aventix2020";
 
         Properties props = new Properties();
         props.put("mail.smtp.port", "587");
@@ -125,17 +120,21 @@ public class ServiceFacturation implements Serializable {
         session.setDebug(true);
         
         //Redaction du message
-        MimeMessage message = new MimeMessage(session);   
-        message.setFrom(new InternetAddress(from));
+        MimeMessage message = new MimeMessage(session);
+        ServiceFacturation sF = services.findServiceFacturationById(1L);
+        message.setFrom(new InternetAddress(sF.getEmail()));
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
         message.setSubject("Facture commande N° " + c.getId());
         message.setText("Commande N° " + c.getId() + "\n\nDate commande : " + c.getDateCommande() + "\n\nEntreprise N° " + c.getEntreprise().getId() + "\n\nNom entreprise : " + c.getEntreprise().getNomEntreprise() + "\n\nNombre de cartes commandees : " + c.getNbCartes() + "\n\nMontant total TTC : " + c.getMontantTotal() + " euros" + "\n\nCommentaires : " + c.getCommentaires());
 
         Transport tr = session.getTransport("smtp");
-        tr.connect(smtpHost, username, passwordMail);
+        tr.connect(smtpHost, sF.getEmail(), sF.getPassword());
         message.saveChanges();
         tr.sendMessage(message,message.getAllRecipients());
         tr.close();
+        
+        commande.setStatut(true);
+        services.miseAJourCommande(commande);
         }
 
 /*---------------------------------Surcharges---------------------------------*/
