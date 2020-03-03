@@ -13,7 +13,7 @@ import util.JpaUtil;
 
 /*--------------------------------FIN IMPORTS---------------------------------*/
 
-public class ServicesImpl implements ServicesEmploye, ServicesEntreprise, ServicesCommercant, ServicesCommande, ServicesCarte, ServicesServiceFacturation {
+public class ServicesImpl implements ServicesEmploye, ServicesEntreprise, ServicesCommercant, ServicesCommande, ServicesCarte, ServicesTransa, ServicesServiceFacturation {
       
 /*--------------------------------ENTREPRISES---------------------------------*/
     
@@ -494,6 +494,11 @@ public class ServicesImpl implements ServicesEmploye, ServicesEntreprise, Servic
     public List<Transa> findTransaByIdCommercant(Long idCommercant) {
         TransaDao dao = new TransaDao();
         return dao.findTransaByIdCommercant(idCommercant);
+    }
+    
+    public List<Transa> findTransaByStatut(boolean statut) {
+        TransaDao dao = new TransaDao();
+        return dao.findTransaByStatut(statut);
     }
     
 /*------------------------------FIN TRANSACTIONS------------------------------*/

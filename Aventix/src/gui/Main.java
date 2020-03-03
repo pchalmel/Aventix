@@ -4,6 +4,7 @@ package gui;
 
 /*----------------------------------IMPORTS-----------------------------------*/
 
+import java.io.IOException;
 import javax.mail.MessagingException;
 import modele.Carte;
 import modele.Commande;
@@ -13,12 +14,18 @@ import modele.Entreprise;
 import modele.ServiceFacturation;
 import modele.Transa;
 import services.ServicesImpl;
+import java.lang.Runnable;
+import java.lang.Thread;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+import modele.ServiceCompensation;
 
 /*--------------------------------FIN IMPORTS---------------------------------*/
 
 public class Main {
 
-    public static void main(String[] args) throws MessagingException {
+    public static void main(String[] args) throws MessagingException, IOException {
         
         //Instanciation de 2 objets de chaque entité
         ServiceFacturation sF1 = new ServiceFacturation();
@@ -59,26 +66,23 @@ public class Main {
         employe1.demenager("1 rue du Paradis");
         
         //Affichage de toutes les instances des differentes entités
-        System.out.println(entreprise1.toString());
-        System.out.println(entreprise2.toString());
-        System.out.println(employe1.toString());
-        System.out.println(employe2.toString());
-        System.out.println(commercant1.toString());
-        System.out.println(commercant2.toString());
-        System.out.println(services.findCarteByIdEmploye(employe1.getId()).toString());
-        System.out.println(services.findCarteByIdEmploye(employe2.getId()).toString());
-        System.out.println(commande1.toString());
-        System.out.println(commande2.toString());
-        System.out.println(transaction1.toString());
-        System.out.println(transaction2.toString());
-        System.out.println(services.findEmployeById(employe1.getId()).toString());
+        System.out.println(services.findAllEntreprises());
+        System.out.println(services.findAllEmployes());
+        System.out.println(services.findAllCommercants());
+        System.out.println(services.findAllCartes());
+        System.out.println(services.findAllCommandes());
+        System.out.println(services.findAllTransas());
         System.out.println(employe1.historiqueTransas().toString());
         
         //sF1.envoyerFacture(commande1);
         //employe2.passwordOublie();
         //entreprise1.nouvelEmploye(employe1);
+        
+        TimerTask timerTask = new ServiceCompensation();
+        Timer timer = new Timer(true);
+        timer.scheduleAtFixedRate(timerTask, new Date(), 5000);
+        System.in.read();
     }
-
 }
 
                             /*Fin Main Classe*/

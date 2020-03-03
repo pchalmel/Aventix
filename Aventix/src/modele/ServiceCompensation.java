@@ -4,12 +4,16 @@ package modele;
 
 /*----------------------------------IMPORTS-----------------------------------*/
 
+import static java.lang.Thread.sleep;
+import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import services.ServicesImpl;
 
 /*--------------------------------FIN IMPORTS---------------------------------*/
 
-public class ServiceCompensation {
-
+public class ServiceCompensation extends TimerTask {
+    
 /*---------------------------------ATTRIBUTS----------------------------------*/
     
     
@@ -39,6 +43,10 @@ public class ServiceCompensation {
 
 /*---------------------------------Surcharges---------------------------------*/
 
+    @Override
+    public void run() {
+        System.out.println("Ok");
+    }
     
 /*--------------------------------FIN METHODES--------------------------------*/
     

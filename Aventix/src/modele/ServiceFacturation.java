@@ -135,7 +135,7 @@ public class ServiceFacturation implements Serializable {
         
         commande.setStatut(true);
         services.miseAJourCommande(commande);
-        }
+    }
 
 /*---------------------------------Surcharges---------------------------------*/
 

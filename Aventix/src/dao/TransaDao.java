@@ -69,6 +69,13 @@ public class TransaDao {
         return liste;
     }
     
+    public List<Transa> findTransaByStatut(boolean statut){
+        EntityManager em = JpaUtil.getEntityManager();
+        Query query = em.createQuery("select t from Transa as t where t.statut=:statut").setParameter("statut", statut);
+        List<Transa> liste = query.getResultList();
+        return liste;
+    }
+    
 /*--------------------------FIN FINDERS TRANSACTIONS--------------------------*/
     
 }
