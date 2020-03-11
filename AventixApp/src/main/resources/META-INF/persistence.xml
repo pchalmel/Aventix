@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="AventixPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.aventix.AventixApp.modele.Carte</class>
+    <class>com.aventix.AventixApp.modele.Commande</class>
+    <class>com.aventix.AventixApp.modele.Commercant</class>
+    <class>com.aventix.AventixApp.modele.Employe</class>
+    <class>com.aventix.AventixApp.modele.Entreprise</class>
+    <class>com.aventix.AventixApp.modele.ServiceFacturation</class>
+    <class>com.aventix.AventixApp.modele.Transa</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/mysql?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value=""/>
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+    </properties>
+  </persistence-unit>
+</persistence>
