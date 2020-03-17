@@ -40,10 +40,4 @@ public class MainController {
     public String login() {
         return "login-2";
     }
-    
-    @RequestMapping(value = { "/login" }, method = RequestMethod.POST)
-    public String employeSubmit(@ModelAttribute("employe") Employe employe, Model model) {
-        Employe employe = services.findEmployeByEmail(employe.getEmail());
-            return "indexEmploye";
-    }
 }
