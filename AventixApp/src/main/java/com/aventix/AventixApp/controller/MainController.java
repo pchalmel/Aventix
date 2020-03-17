@@ -9,16 +9,19 @@ import com.aventix.AventixApp.modele.Employe;
 import com.aventix.AventixApp.services.ServicesImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
  
 @Controller
 public class MainController {
+    
+    ServicesImpl services = new ServicesImpl();
  
-    @RequestMapping(value = { "/employe" }, method = RequestMethod.GET)
+    @RequestMapping(value = { "/indexEmploye" }, method = RequestMethod.GET)
     public String index(Model model) {
  
-        ServicesImpl services = new ServicesImpl();
+        
         Employe e =  new Employe("Vivian", "Wong", "Villeurbanne", "vivian.wong@insa-lyon.fr");
         services.referencerEmploye(e);
         
@@ -33,9 +36,14 @@ public class MainController {
         return "indexEmploye";
     }
     
-    @RequestMapping(value = { "/test" }, method = RequestMethod.GET)
-    public String indexEmploye() {
-        return "indexEmploye";
+    @RequestMapping(value = { "/login" }, method = RequestMethod.GET)
+    public String login() {
+        return "login-2";
     }
- 
+    
+    @RequestMapping(value = { "/login" }, method = RequestMethod.POST)
+    public String employeSubmit(@ModelAttribute("employe") Employe employe, Model model) {
+        Employe employe = services.findEmployeByEmail(employe.getEmail());
+            return "indexEmploye";
+    }
 }
