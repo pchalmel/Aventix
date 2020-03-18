@@ -59,10 +59,10 @@ public class Entreprise implements Serializable {
     
 //Constructeur par valeurs
     
-    public Entreprise(String nomEntreprise, String email, String adresse, String telephone) {
+    public Entreprise(String nomEntreprise, String email, String password, String adresse, String telephone) {
         this.nomEntreprise = nomEntreprise;
         this.email = email;
-        this.password = (this.getNomEntreprise() + "@" + "2020").replace(" ", "");
+        this.password = password;
         this.adresse = adresse;
         this.telephone = telephone;
     }

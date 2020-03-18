@@ -43,10 +43,10 @@ public class Commercant implements Serializable {
     
 //Constructeur par valeurs
     
-    public Commercant(String nomCommercant, String email, String adresse, String telephone, String iban) {
+    public Commercant(String nomCommercant, String email, String password, String adresse, String telephone, String iban) {
         this.nomCommercant = nomCommercant;
         this.email = email;
-        this.password = (this.getNomCommercant() + "@" + "2020").replace(" ", "");
+        this.password = password;
         this.adresse = adresse;
         this.telephone = telephone;
         this.iban = iban;
