@@ -120,35 +120,15 @@ public class Entreprise implements Serializable {
     
 /*-----------------------------------Others-----------------------------------*/
     
-    //Changer l'adresse de l'entreprise
-    public void demenager(String adresse) {
+    //Editer le compte (adresse, nom,email, mot de passe, telephone)
+    public void editerCompteEntreprise(String adresse, String nom, String email, String password, String telephone) {
         ServicesImpl services = new ServicesImpl();
         Entreprise e = services.findEntrepriseById(this.getId());
         e.setAdresse(adresse);
-        services.miseAJourEntreprise(e);
-    }
-    
-    //Changer le nom de l'entreprise
-    public void changerNom(String nom) {
-        ServicesImpl services = new ServicesImpl();
-        Entreprise e = services.findEntrepriseById(this.getId());
         e.setNomEntreprise(nom);
-        services.miseAJourEntreprise(e);
-    }
-    
-    //Changer l'email du compte de l'entreprise
-    public void changerEmail(String email) {
-        ServicesImpl services = new ServicesImpl();
-        Entreprise e = services.findEntrepriseById(this.getId());
         e.setEmail(email);
-        services.miseAJourEntreprise(e);
-    }
-    
-    //Changer le mot de passe du compte de l'entreprise
-    public void changerPassword(String password) {
-        ServicesImpl services = new ServicesImpl();
-        Entreprise e = services.findEntrepriseById(this.getId());
         e.setPassword(password);
+        e.setTelephone(telephone);
         services.miseAJourEntreprise(e);
     }
     
