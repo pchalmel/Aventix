@@ -37,40 +37,24 @@ public class CommercantDao {
     
     public List<Commercant> findAllCommercants(){
         EntityManager em = JpaUtil.getEntityManager();
-        Query query = em.createQuery("select c from commercant as c");
+        Query query = em.createQuery("select c from Commercant as c");
         List<Commercant> liste = query.getResultList();
         return liste;
     }
     
-    public Commercant findCommercantByIdPersonne(Long idPersonne){
+    public Commercant findCommercantById(Long idCommercant){
         EntityManager em = JpaUtil.getEntityManager();
-        return em.find(Commercant.class, idPersonne);
+        return em.find(Commercant.class, idCommercant);
     }
     
-    public List<Commercant> findCommercantByPrenom(String prenom){
+    public Commercant findCommercantByNom(String nomCommercant){
         EntityManager em = JpaUtil.getEntityManager();
-        Query query = em.createQuery("select c from commercant as c where c.prenom=:prenom").setParameter("prenom", prenom);
-        List<Commercant> liste = query.getResultList();
-        return liste;
+        return em.find(Commercant.class, nomCommercant);
     }
     
-    public List<Commercant> findCommercantByNom(String nom){
+    public Commercant findCommercantByEmail(String email){
         EntityManager em = JpaUtil.getEntityManager();
-        Query query = em.createQuery("select c from commercant as c where c.nom=:nom").setParameter("nom", nom);
-        List<Commercant> liste = query.getResultList();
-        return liste;
-    }
-    
-    public Commercant findCommercantByNomCommercant(String nomCommercant){
-        EntityManager em = JpaUtil.getEntityManager();
-        Query query = em.createQuery("select c from commercant as c where c.nomCommercant=:nomCommercant").setParameter("nomCommercant", nomCommercant);
-        Commercant c = (Commercant) query.getResultList();
-        return c;
-    }
-    
-    public Commercant findCommercantByIdentifiant(String identifiant){
-        EntityManager em = JpaUtil.getEntityManager();
-        return em.find(Commercant.class, identifiant);
+        return em.find(Commercant.class, email);
     }
     
 /*--------------------------FIN FINDERS COMMERCANTS---------------------------*/

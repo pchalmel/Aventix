@@ -13,17 +13,17 @@ import util.JpaUtil;
 
 /*--------------------------------FIN IMPORTS---------------------------------*/
 
-public class ServicesImpl implements ServicesPersonne, ServicesUtilisateur, ServicesEmployeur, ServicesEmploye, ServicesCommercant, ServicesCommande, ServicesCarte {
+public class ServicesImpl implements ServicesEmploye, ServicesEntreprise, ServicesCommercant, ServicesCommande, ServicesCarte, ServicesTransa, ServicesServiceFacturation {
+      
+/*--------------------------------ENTREPRISES---------------------------------*/
     
-/*---------------------------------PERSONNES----------------------------------*/
-    
-    public void referencerPersonne(Personne p) {
-        PersonneDao dao = new PersonneDao();
+    public void referencerEntreprise(Entreprise e) {
+        EntrepriseDao dao = new EntrepriseDao();
         EntityTransaction tx = null;
         try{
             tx = JpaUtil.getEntityTransaction();
             tx.begin();
-            dao.createPersonne(p);
+            dao.createEntreprise(e);
             tx.commit();
         }catch(Exception ex){
             ex.printStackTrace();
@@ -35,13 +35,13 @@ public class ServicesImpl implements ServicesPersonne, ServicesUtilisateur, Serv
         }
     }
     
-    public void dereferencerPersonne(Personne p) {
-        PersonneDao dao = new PersonneDao();
+    public void dereferencerEntreprise(Entreprise e) {
+        EntrepriseDao dao = new EntrepriseDao();
         EntityTransaction tx = null;
         try{
             tx = JpaUtil.getEntityTransaction();
             tx.begin();
-            dao.deletePersonne(p);
+            dao.deleteEntreprise(e);
             tx.commit();
         }catch(Exception ex){
             ex.printStackTrace();
@@ -53,13 +53,13 @@ public class ServicesImpl implements ServicesPersonne, ServicesUtilisateur, Serv
         }
     }
     
-    public void miseAJourPersonne(Personne p) {
-        PersonneDao dao = new PersonneDao();
+    public void miseAJourEntreprise(Entreprise e) {
+        EntrepriseDao dao = new EntrepriseDao();
         EntityTransaction tx = null;
         try{
             tx = JpaUtil.getEntityTransaction();
             tx.begin();
-            dao.updatePersonne(p);
+            dao.updateEntreprise(e);
             tx.commit();
         }catch(Exception ex){
             ex.printStackTrace();
@@ -71,198 +71,27 @@ public class ServicesImpl implements ServicesPersonne, ServicesUtilisateur, Serv
         }
     }
     
-    public List<Personne> findAllPersonnes() {
-        PersonneDao dao = new PersonneDao();
-        return dao.findAllPersonnes();
+    public List<Entreprise> findAllEntreprises() {
+        EntrepriseDao dao = new EntrepriseDao();
+        return dao.findAllEntreprises();
     }
     
-    public List<Personne> findPersonneByPrenom(String prenom) {
-        PersonneDao dao = new PersonneDao();
-        return dao.findPersonneByPrenom(prenom);
+    public Entreprise findEntrepriseByNom(String nomEntreprise) {
+        EntrepriseDao dao = new EntrepriseDao();
+        return dao.findEntrepriseByNom(nomEntreprise);
     }
     
-    public List<Personne> findPersonneByNom(String nom) {
-        PersonneDao dao = new PersonneDao();
-        return dao.findPersonneByNom(nom);
+    public Entreprise findEntrepriseByEmail(String email) {
+        EntrepriseDao dao = new EntrepriseDao();
+        return dao.findEntrepriseByEmail(email);
     }
     
-    public Personne findPersonneByIdPersonne(Long idPersonne) {
-        PersonneDao dao = new PersonneDao();
-        return dao.findPersonneByIdPersonne(idPersonne);
+    public Entreprise findEntrepriseById(Long idEntreprise) {
+        EntrepriseDao dao = new EntrepriseDao();
+        return dao.findEntrepriseById(idEntreprise);
     }
     
-/*--------------------------------FIN PERSONNES-------------------------------*/
-    
-/*--------------------------------UTILISATEURS--------------------------------*/
-    
-    public void referencerUtilisateur(Utilisateur u) {
-        UtilisateurDao dao = new UtilisateurDao();
-        EntityTransaction tx = null;
-        try{
-            tx = JpaUtil.getEntityTransaction();
-            tx.begin();
-            dao.createUtilisateur(u);
-            tx.commit();
-        }catch(Exception ex){
-            ex.printStackTrace();
-            if(tx != null && tx.isActive()){
-                tx.rollback();
-            }
-        }finally{
-            JpaUtil.closeEntityManager();
-        }
-    }
-    
-    public void dereferencerUtilisateur(Utilisateur u) {
-        UtilisateurDao dao = new UtilisateurDao();
-        EntityTransaction tx = null;
-        try{
-            tx = JpaUtil.getEntityTransaction();
-            tx.begin();
-            dao.deleteUtilisateur(u);
-            tx.commit();
-        }catch(Exception ex){
-            ex.printStackTrace();
-            if(tx != null && tx.isActive()){
-                tx.rollback();
-            }
-        }finally{
-            JpaUtil.closeEntityManager();
-        }
-    }
-    
-    public void miseAJourUtilisateur(Utilisateur u) {
-        UtilisateurDao dao = new UtilisateurDao();
-        EntityTransaction tx = null;
-        try{
-            tx = JpaUtil.getEntityTransaction();
-            tx.begin();
-            dao.updateUtilisateur(u);
-            tx.commit();
-        }catch(Exception ex){
-            ex.printStackTrace();
-            if(tx != null && tx.isActive()){
-                tx.rollback();
-            }
-        }finally{
-            JpaUtil.closeEntityManager();
-        }
-    }
-    
-    public List<Utilisateur> findAllUtilisateurs() {
-        UtilisateurDao dao = new UtilisateurDao();
-        return dao.findAllUtilisateurs();
-    }
-    
-    public List<Utilisateur> findUtilisateurByPrenom(String prenom) {
-        UtilisateurDao dao = new UtilisateurDao();
-        return dao.findUtilisateurByPrenom(prenom);
-    }
-    
-    public List<Utilisateur> findUtilisateurByNom(String nom) {
-        UtilisateurDao dao = new UtilisateurDao();
-        return dao.findUtilisateurByNom(nom);
-    }
-    
-    public Utilisateur findUtilisateurByIdentifiant(String identifiant) {
-        UtilisateurDao dao = new UtilisateurDao();
-        return dao.findUtilisateurByIdentifiant(identifiant);
-    }
-    
-    public Utilisateur findUtilisateurByIdPersonne(Long idPersonne) {
-        UtilisateurDao dao = new UtilisateurDao();
-        return dao.findUtilisateurByIdPersonne(idPersonne);
-    }
-    
-/*------------------------------FIN UTILISATEURS------------------------------*/
-    
-/*---------------------------------EMPLOYEURS---------------------------------*/
-    
-    public void referencerEmployeur(Employeur e) {
-        EmployeurDao dao = new EmployeurDao();
-        EntityTransaction tx = null;
-        try{
-            tx = JpaUtil.getEntityTransaction();
-            tx.begin();
-            dao.createEmployeur(e);
-            tx.commit();
-        }catch(Exception ex){
-            ex.printStackTrace();
-            if(tx != null && tx.isActive()){
-                tx.rollback();
-            }
-        }finally{
-            JpaUtil.closeEntityManager();
-        }
-    }
-    
-    public void dereferencerEmployeur(Employeur e) {
-        EmployeurDao dao = new EmployeurDao();
-        EntityTransaction tx = null;
-        try{
-            tx = JpaUtil.getEntityTransaction();
-            tx.begin();
-            dao.deleteEmployeur(e);
-            tx.commit();
-        }catch(Exception ex){
-            ex.printStackTrace();
-            if(tx != null && tx.isActive()){
-                tx.rollback();
-            }
-        }finally{
-            JpaUtil.closeEntityManager();
-        }
-    }
-    
-    public void miseAJourEmployeur(Employeur e) {
-        EmployeurDao dao = new EmployeurDao();
-        EntityTransaction tx = null;
-        try{
-            tx = JpaUtil.getEntityTransaction();
-            tx.begin();
-            dao.updateEmployeur(e);
-            tx.commit();
-        }catch(Exception ex){
-            ex.printStackTrace();
-            if(tx != null && tx.isActive()){
-                tx.rollback();
-            }
-        }finally{
-            JpaUtil.closeEntityManager();
-        }
-    }
-    
-    public List<Employeur> findAllEmployeurs() {
-        EmployeurDao dao = new EmployeurDao();
-        return dao.findAllEmployeurs();
-    }
-    
-    public List<Employeur> findEmployeurByPrenom(String prenom) {
-        EmployeurDao dao = new EmployeurDao();
-        return dao.findEmployeurByPrenom(prenom);
-    }
-    
-    public List<Employeur> findEmployeurByNom(String nom) {
-        EmployeurDao dao = new EmployeurDao();
-        return dao.findEmployeurByNom(nom);
-    }
-    
-    public Employeur findEmployeurByNomSociete(String nomSociete) {
-        EmployeurDao dao = new EmployeurDao();
-        return dao.findEmployeurByNomSociete(nomSociete);
-    }
-    
-    public Employeur findEmployeurByIdentifiant(String identifiant) {
-        EmployeurDao dao = new EmployeurDao();
-        return dao.findEmployeurByIdentifiant(identifiant);
-    }
-    
-    public Employeur findEmployeurByIdPersonne(Long idPersonne) {
-        EmployeurDao dao = new EmployeurDao();
-        return dao.findEmployeurByIdPersonne(idPersonne);
-    }
-    
-/*-------------------------------FIN EMPLOYEURS-------------------------------*/
+/*------------------------------FIN ENTREPRISES-------------------------------*/
     
 /*----------------------------------EMPLOYES----------------------------------*/
     
@@ -335,9 +164,9 @@ public class ServicesImpl implements ServicesPersonne, ServicesUtilisateur, Serv
         return dao.findEmployeByNom(nom);
     }
     
-    public List<Employe> findEmployeByNomSociete(Long idEmployeur) {
+    public List<Employe> findEmployeByEntreprise(Long idEntreprise) {
         EmployeDao dao = new EmployeDao();
-        return dao.findEmployeByNomSociete(idEmployeur);
+        return dao.findEmployeByEntreprise(idEntreprise);
     }
     
     public Employe findEmployeByIdCarte(Long idCarte) {
@@ -345,14 +174,14 @@ public class ServicesImpl implements ServicesPersonne, ServicesUtilisateur, Serv
         return dao.findEmployeByIdCarte(idCarte);
     }
     
-    public Employe findEmployeByIdentifiant(String identifiant) {
+    public Employe findEmployeByEmail(String email) {
         EmployeDao dao = new EmployeDao();
-        return dao.findEmployeByIdentifiant(identifiant);
+        return dao.findEmployeByEmail(email);
     }
     
-    public Employe findEmployeByIdPersonne(Long idPersonne) {
+    public Employe findEmployeById(Long idEmploye) {
         EmployeDao dao = new EmployeDao();
-        return dao.findEmployeByIdPersonne(idPersonne);
+        return dao.findEmployeById(idEmploye);
     }
     
 /*--------------------------------FIN EMPLOYES--------------------------------*/
@@ -418,29 +247,19 @@ public class ServicesImpl implements ServicesPersonne, ServicesUtilisateur, Serv
         return dao.findAllCommercants();
     }
     
-    public List<Commercant> findCommercantByPrenom(String prenom) {
+    public Commercant findCommercantByNom(String nomCommercant) {
         CommercantDao dao = new CommercantDao();
-        return dao.findCommercantByPrenom(prenom);
+        return dao.findCommercantByNom(nomCommercant);
     }
     
-    public List<Commercant> findCommercantByNom(String nom) {
+    public Commercant findCommercantByEmail(String email) {
         CommercantDao dao = new CommercantDao();
-        return dao.findCommercantByNom(nom);
+        return dao.findCommercantByEmail(email);
     }
     
-    public Commercant findCommercantByNomCommercant(String nomCommercant) {
+    public Commercant findCommercantById(Long idCommercant) {
         CommercantDao dao = new CommercantDao();
-        return dao.findCommercantByNomCommercant(nomCommercant);
-    }
-    
-    public Commercant findCommercantByIdentifiant(String identifiant) {
-        CommercantDao dao = new CommercantDao();
-        return dao.findCommercantByIdentifiant(identifiant);
-    }
-    
-    public Commercant findCommercantByIdPersonne(Long idPersonne) {
-        CommercantDao dao = new CommercantDao();
-        return dao.findCommercantByIdPersonne(idPersonne);
+        return dao.findCommercantById(idCommercant);
     }
     
 /*------------------------------FIN COMMERCANTS-------------------------------*/
@@ -506,9 +325,9 @@ public class ServicesImpl implements ServicesPersonne, ServicesUtilisateur, Serv
         return dao.findAllCommandes();
     }
     
-    public Commande findCommandeByIdCommande(Long idCommande) {
+    public Commande findCommandeById(Long idCommande) {
         CommandeDao dao = new CommandeDao();
-        return dao.findCommandeByIdCommande(idCommande);
+        return dao.findCommandeById(idCommande);
     }
     
     public List<Commande> findCommandeByDate(Date dateCommande) {
@@ -516,14 +335,14 @@ public class ServicesImpl implements ServicesPersonne, ServicesUtilisateur, Serv
         return dao.findCommandeByDate(dateCommande);
     }
     
-    public List<Commande> findCommandeByIdEmployeur(Long idEmployeur) {
+    public List<Commande> findCommandeByIdEntreprise(Long idEntreprise) {
         CommandeDao dao = new CommandeDao();
-        return dao.findCommandeByIdEmployeur(idEmployeur);
+        return dao.findCommandeByIdEntreprise(idEntreprise);
     }
     
 /*-------------------------------FIN COMMANDES--------------------------------*/
     
-/*---------------------------------CARTES----------------------------------*/
+/*----------------------------------CARTES------------------------------------*/
     
     public void referencerCarte(Carte c) {
         CarteDao dao = new CarteDao();
@@ -584,9 +403,9 @@ public class ServicesImpl implements ServicesPersonne, ServicesUtilisateur, Serv
         return dao.findAllCartes();
     }
     
-    public Carte findCarteByIdCarte(Long idCarte) {
+    public Carte findCarteById(Long idCarte) {
         CarteDao dao = new CarteDao();
-        return dao.findCarteByIdCarte(idCarte);
+        return dao.findCarteById(idCarte);
     }
     
     public Carte findCarteByIdEmploye(Long idEmploye) {
@@ -594,7 +413,163 @@ public class ServicesImpl implements ServicesPersonne, ServicesUtilisateur, Serv
         return dao.findCarteByIdEmploye(idEmploye);
     }
     
-/*-------------------------------FIN CARTES--------------------------------*/
+/*--------------------------------FIN CARTES----------------------------------*/
+    
+/*-------------------------------TRANSACTIONS---------------------------------*/
+    
+    public void referencerTransa(Transa t) {
+        TransaDao dao = new TransaDao();
+        EntityTransaction tx = null;
+        try{
+            tx = JpaUtil.getEntityTransaction();
+            tx.begin();
+            dao.createTransa(t);
+            tx.commit();
+        }catch(Exception ex){
+            ex.printStackTrace();
+            if(tx != null && tx.isActive()){
+                tx.rollback();
+            }
+        }finally{
+            JpaUtil.closeEntityManager();
+        }
+    }
+    
+    public void dereferencerTransa(Transa t) {
+        TransaDao dao = new TransaDao();
+        EntityTransaction tx = null;
+        try{
+            tx = JpaUtil.getEntityTransaction();
+            tx.begin();
+            dao.deleteTransa(t);
+            tx.commit();
+        }catch(Exception ex){
+            ex.printStackTrace();
+            if(tx != null && tx.isActive()){
+                tx.rollback();
+            }
+        }finally{
+            JpaUtil.closeEntityManager();
+        }
+    }
+    
+    public void miseAJourTransa(Transa t) {
+        TransaDao dao = new TransaDao();
+        EntityTransaction tx = null;
+        try{
+            tx = JpaUtil.getEntityTransaction();
+            tx.begin();
+            dao.updateTransa(t);
+            tx.commit();
+        }catch(Exception ex){
+            ex.printStackTrace();
+            if(tx != null && tx.isActive()){
+                tx.rollback();
+            }
+        }finally{
+            JpaUtil.closeEntityManager();
+        }
+    }
+    
+    public List<Transa> findAllTransas() {
+        TransaDao dao = new TransaDao();
+        return dao.findAllTransas();
+    }
+    
+    public Transa findTransaById(Long idTransaction) {
+        TransaDao dao = new TransaDao();
+        return dao.findTransaById(idTransaction);
+    }
+    
+    public List<Transa> findTransaByDate(Date dateTransa) {
+        TransaDao dao = new TransaDao();
+        return dao.findTransaByDate(dateTransa);
+    }
+    
+    public List<Transa> findTransaByIdCarte(Long idCarte) {
+        TransaDao dao = new TransaDao();
+        return dao.findTransaByIdCarte(idCarte);
+    }
+    
+    public List<Transa> findTransaByIdCommercant(Long idCommercant) {
+        TransaDao dao = new TransaDao();
+        return dao.findTransaByIdCommercant(idCommercant);
+    }
+    
+    public List<Transa> findTransaByStatut(boolean statut) {
+        TransaDao dao = new TransaDao();
+        return dao.findTransaByStatut(statut);
+    }
+    
+/*------------------------------FIN TRANSACTIONS------------------------------*/
+    
+/*----------------------------SERVICE FACTURATION-----------------------------*/
+    
+    public void referencerServiceFacturation(ServiceFacturation sF) {
+        ServiceFacturationDao dao = new ServiceFacturationDao();
+        EntityTransaction tx = null;
+        try{
+            tx = JpaUtil.getEntityTransaction();
+            tx.begin();
+            dao.createServiceFacturation(sF);
+            tx.commit();
+        }catch(Exception ex){
+            ex.printStackTrace();
+            if(tx != null && tx.isActive()){
+                tx.rollback();
+            }
+        }finally{
+            JpaUtil.closeEntityManager();
+        }
+    }
+    
+    public void dereferencerServiceFacturation(ServiceFacturation sF) {
+        ServiceFacturationDao dao = new ServiceFacturationDao();
+        EntityTransaction tx = null;
+        try{
+            tx = JpaUtil.getEntityTransaction();
+            tx.begin();
+            dao.deleteServiceFacturation(sF);
+            tx.commit();
+        }catch(Exception ex){
+            ex.printStackTrace();
+            if(tx != null && tx.isActive()){
+                tx.rollback();
+            }
+        }finally{
+            JpaUtil.closeEntityManager();
+        }
+    }
+    
+    public void miseAJourServiceFacturation(ServiceFacturation sF) {
+        ServiceFacturationDao dao = new ServiceFacturationDao();
+        EntityTransaction tx = null;
+        try{
+            tx = JpaUtil.getEntityTransaction();
+            tx.begin();
+            dao.updateServiceFacturation(sF);
+            tx.commit();
+        }catch(Exception ex){
+            ex.printStackTrace();
+            if(tx != null && tx.isActive()){
+                tx.rollback();
+            }
+        }finally{
+            JpaUtil.closeEntityManager();
+        }
+    }
+    
+    public ServiceFacturation findServiceFacturationById(Long idServiceFacturation) {
+        ServiceFacturationDao dao = new ServiceFacturationDao();
+        return dao.findServiceFacturationById(idServiceFacturation);
+    }
+    
+    public ServiceFacturation findServiceFacturationByEmail(String email) {
+        ServiceFacturationDao dao = new ServiceFacturationDao();
+        return dao.findServiceFacturationByEmail(email);
+    }
+    
+/*---------------------------FIN SERVICE FACTURATION--------------------------*/
     
 }
 

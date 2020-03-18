@@ -16,10 +16,10 @@ public interface ServicesEmploye {
     public List<Employe> findAllEmployes();
     public List<Employe> findEmployeByPrenom(String prenom);
     public List<Employe> findEmployeByNom(String nom);
-    public List<Employe> findEmployeByNomSociete(Long idEmployeur);
+    public List<Employe> findEmployeByEntreprise(Long idEntreprise);
     public Employe findEmployeByIdCarte(Long idCarte);
-    public Employe findEmployeByIdentifiant(String identifiant);
-    public Employe findEmployeByIdPersonne(Long idPersonne);
+    public Employe findEmployeByEmail(String email);
+    public Employe findEmployeById(Long idEmploye);
 }
 
                     /*Fin Interface Services Employe*/

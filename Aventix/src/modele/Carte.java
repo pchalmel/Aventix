@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import services.ServicesImpl;
 
 /*--------------------------------FIN IMPORTS---------------------------------*/
 
@@ -19,13 +21,15 @@ public class Carte implements Serializable {
     
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCarte;
+    
+    @OneToOne
+    private Employe employe;
     
     private boolean validite;
     private int montantMaxJournalier;
     private float solde;
-    private Long idEmploye;
 
 /*-------------------------------FIN ATTRIBUTS--------------------------------*/
     
@@ -34,35 +38,34 @@ public class Carte implements Serializable {
 //Constructeur par défault
     
     public Carte() {
-        this.idEmploye = 0L;
+        this.validite = false;
         this.montantMaxJournalier = 0;
         this.solde = 0;
-        this.validite = false;
     }
     
-//Constructeur par valeurs 1
+//Constructeur par valeurs
     
-    public Carte(Long idEmploye, int montantMaxJournalier) {
-        this.idEmploye = idEmploye;
+    public Carte(int montantMaxJournalier) {
+        this.validite = true;
         this.montantMaxJournalier = montantMaxJournalier;
         this.solde = 0;
-        this.validite = true;
-    }
-    
-//Constructeur par valeurs 2
-    
+    }    
     
 /*-----------------------------FIN CONSTRUCTEURS------------------------------*/
     
 /*----------------------------------METHODES----------------------------------*/
 /*----------------------------------Getters-----------------------------------*/
     
-    public int getIdCarte() {
-        return hashCode();
+    public Long getId() {
+        return idCarte;
     }
     
-    public Long getIdEmploye() {
-        return idEmploye;
+    public Employe getEmploye() {
+        return employe;
+    }
+    
+    public boolean getValidite() {
+        return validite;
     }
     
     public int getMontantMaxJournalier() {
@@ -73,14 +76,14 @@ public class Carte implements Serializable {
         return solde;
     }
     
-    public boolean getValidite() {
-        return validite;
-    }
-    
 /*----------------------------------Setters-----------------------------------*/
    
-    public void setIdEmploye(Long idEmploye) {
-        this.idEmploye = idEmploye;
+    public void setEmploye(Employe employe) {
+        this.employe = employe;
+    }
+    
+    public void setValidite(boolean validite) {
+        this.validite = validite;
     }
     
     public void setMontantMaxJournalier(int montantMaxJournalier) {
@@ -91,13 +94,25 @@ public class Carte implements Serializable {
         this.solde = solde;
     }
     
-    public void setValidite(boolean validite) {
-        this.validite = validite;
-    }
-    
 /*-----------------------------------Others-----------------------------------*/
     
-
+    public void recharger(int montant) {
+        this.solde += montant;
+    }
+    
+    public void changerMontantMaxJournalier(int montant) {
+        this.setMontantMaxJournalier(montant);
+    }
+    
+    //Affecter l'employe à la carte
+    public void affecterEmploye(Employe employe) {
+        ServicesImpl services = new ServicesImpl();
+        Carte c = services.findCarteById(this.getId());
+        c.setEmploye(employe);
+        services.miseAJourCarte(c);
+        employe.setCarte(c);
+        services.miseAJourEmploye(employe);
+    }
 
 /*---------------------------------Surcharges---------------------------------*/
 
@@ -123,7 +138,7 @@ public class Carte implements Serializable {
 
     @Override
     public String toString() {
-        return "modele.Carte[ id carte=" + idCarte + ", id employe=" + idEmploye + ", montant max journalier=" + montantMaxJournalier + ", solde=" + solde + ", validite=" + validite + " ]";
+        return "modele.Carte[ id carte=" + idCarte + ", employe=" + this.getEmploye().getId() + ", validite=" + validite + ", montant max journalier=" + montantMaxJournalier + ", solde=" + solde + " ]";
     }
     
 /*--------------------------------FIN METHODES--------------------------------*/

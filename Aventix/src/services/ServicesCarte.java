@@ -15,7 +15,7 @@ public interface ServicesCarte {
     public void dereferencerCarte(Carte c);
     public void miseAJourCarte(Carte c);
     public List<Carte> findAllCartes();
-    public Carte findCarteByIdCarte(Long idCarte);
+    public Carte findCarteById(Long idCarte);
     public Carte findCarteByIdEmploye(Long idEmploye);
 }
 
