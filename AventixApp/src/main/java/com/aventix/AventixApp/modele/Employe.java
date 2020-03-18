@@ -213,34 +213,13 @@ public class Employe implements Serializable {
     
 /*-----------------------------------Others-----------------------------------*/
     
-    //Changer l'adresse de l'employe
-    public void demenager(String adresse) {
+    //Editer le compte
+    public void editerCompteEmploye(String adresse, String nom, String email, String password) {
         ServicesImpl services = new ServicesImpl();
         Employe e = services.findEmployeById(this.idEmploye);
         e.setAdresse(adresse);
-        services.miseAJourEmploye(e);
-    }
-    
-    //Changer le nom de famille de l'employe
-    public void marier(String nom) {
-        ServicesImpl services = new ServicesImpl();
-        Employe e = services.findEmployeById(this.idEmploye);
         e.setNom(nom);
-        services.miseAJourEmploye(e);
-    }
-    
-    //Changer l'email du compte de l'employe
-    public void changerEmail(String email) {
-        ServicesImpl services = new ServicesImpl();
-        Employe e = services.findEmployeById(this.idEmploye);
         e.setEmail(email);
-        services.miseAJourEmploye(e);
-    }
-    
-    //Changer le mot de passe du compte de l'employe
-    public void changerPassword(String password) {
-        ServicesImpl services = new ServicesImpl();
-        Employe e = services.findEmployeById(this.idEmploye);
         e.setPassword(password);
         services.miseAJourEmploye(e);
     }
