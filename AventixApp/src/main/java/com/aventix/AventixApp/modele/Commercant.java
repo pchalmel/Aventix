@@ -163,7 +163,7 @@ public class Commercant implements Serializable {
     
     @Override
     public String toString() {
-        return "modele.Commercant[ idCommercant=" + idCommercant + ", nom commercant=" + nomCommercant + ", email=" + email + ", password=" + password + ", adresse=" + adresse + ", telephone=" + telephone + ", iban=" + iban + " ]";
+        return "nom commercant=" + nomCommercant + ", email=" + email + ", adresse=" + adresse + ", telephone=" + telephone + ", iban=" + iban;
     }
     
 /*--------------------------------FIN METHODES--------------------------------*/

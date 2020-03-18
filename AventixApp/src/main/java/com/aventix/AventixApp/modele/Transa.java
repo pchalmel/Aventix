@@ -4,6 +4,7 @@ package com.aventix.AventixApp.modele;
 
 /*----------------------------------IMPORTS-----------------------------------*/
 
+import com.aventix.AventixApp.services.ServicesImpl;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.Date;
@@ -132,7 +133,8 @@ public class Transa implements Serializable {
     
     @Override
     public String toString() {
-        return "modele.Transaction[ id transaction=" + idTransa + ", id carte=" + idCarte + ", idCommercant=" + idCommercant + ", date=" + dateTransa + ", montant=" + montant + ", statut=" + statut + " ]";
+        ServicesImpl services = new ServicesImpl();
+        return "id transaction=" + idTransa + ", id carte=" + idCarte + ", Commercant=" + services.findCommercantById(idCommercant) + ", date=" + dateTransa + ", montant=" + montant + ", statut=" + statut;
     }
     
 /*--------------------------------FIN METHODES--------------------------------*/

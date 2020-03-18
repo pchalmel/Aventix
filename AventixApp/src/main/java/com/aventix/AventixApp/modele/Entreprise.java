@@ -234,6 +234,11 @@ public class Entreprise implements Serializable {
             services.dereferencerCommande(c);
         }
     }
+    
+    //Activer ou desactiver carte
+    public void activerDesactiverCarte(Carte c, boolean validite) {
+        c.setValidite(validite);
+    }
         
     //Liste toutes les cartes
     public List<Carte> listeCartes() {
