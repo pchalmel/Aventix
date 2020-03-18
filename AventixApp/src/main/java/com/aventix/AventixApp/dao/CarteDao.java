@@ -53,6 +53,13 @@ public class CarteDao {
         return em.find(Carte.class, idEmploye);
     }
     
+    public List<Carte> findCarteByIdEntreprise(Long idEntreprise) {
+        EntityManager em = JpaUtil.getEntityManager();
+        Query query = em.createQuery("select c from Carte as c where c.employe.entreprise.idEntreprise=:idEntreprise").setParameter("idEntreprise", idEntreprise);
+        List<Carte> liste = query.getResultList();
+        return liste;
+    }
+    
 /*----------------------------FIN FINDERS CARTES------------------------------*/
     
 }

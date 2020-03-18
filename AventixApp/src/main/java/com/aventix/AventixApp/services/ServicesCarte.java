@@ -17,6 +17,7 @@ public interface ServicesCarte {
     public List<Carte> findAllCartes();
     public Carte findCarteById(Long idCarte);
     public Carte findCarteByIdEmploye(Long idEmploye);
+    public List<Carte> findCarteByIdEntreprise(Long idEntreprise);
 }
 
                     /*Fin Interface Services Carte*/

@@ -21,6 +21,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import com.aventix.AventixApp.services.ServicesImpl;
+import java.util.List;
 
 /*--------------------------------FIN IMPORTS---------------------------------*/
 
@@ -252,6 +253,12 @@ public class Entreprise implements Serializable {
         if (services.findCommandeById(c.getId()).ajouterJour(services.findCommandeById(c.getId()).getDateCommande(), 5).after(now)) {
             services.dereferencerCommande(c);
         }
+    }
+        
+    //Liste toutes les cartes
+    public List<Carte> listeCartes() {
+        ServicesImpl services = new ServicesImpl();
+        return services.findCarteByIdEntreprise(this.getId());
     }
 
 /*---------------------------------Surcharges---------------------------------*/

@@ -413,6 +413,11 @@ public class ServicesImpl implements ServicesEmploye, ServicesEntreprise, Servic
         return dao.findCarteByIdEmploye(idEmploye);
     }
     
+    public List<Carte> findCarteByIdEntreprise(Long idEntreprise) {
+        CarteDao dao = new CarteDao();
+        return dao.findCarteByIdEntreprise(idEntreprise);
+    }
+    
 /*--------------------------------FIN CARTES----------------------------------*/
     
 /*-------------------------------TRANSACTIONS---------------------------------*/
