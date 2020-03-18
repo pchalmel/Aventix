@@ -113,43 +113,16 @@ public class Commercant implements Serializable {
     
 /*-----------------------------------Others-----------------------------------*/
     
-    //Changer l'adresse du commerce
-    public void demenager(String adresse) {
+    //Editer le compte (adresse, nom Commercant, email, password, iban, telephone)
+    public void editerCompteCommercant(String adresse, String nomCommercant, String email, String password, String iban, String telephone) {
         ServicesImpl services = new ServicesImpl();
         Commercant c = services.findCommercantById(this.getId());
         c.setAdresse(adresse);
-        services.miseAJourCommercant(c);
-    }
-    
-    //Changer le nom du commerce
-    public void changerNom(String nom) {
-        ServicesImpl services = new ServicesImpl();
-        Commercant c = services.findCommercantById(this.getId());
-        c.setNomCommercant(nom);
-        services.miseAJourCommercant(c);
-    }
-    
-    //Changer l'email du compte du commercant
-    public void changerEmail(String email) {
-        ServicesImpl services = new ServicesImpl();
-        Commercant c = services.findCommercantById(this.getId());
+        c.setNomCommercant(nomCommercant);
         c.setEmail(email);
-        services.miseAJourCommercant(c);
-    }
-    
-    //Changer le mot de passe du compte du commercant
-    public void changerPassword(String password) {
-        ServicesImpl services = new ServicesImpl();
-        Commercant c = services.findCommercantById(this.getId());
         c.setPassword(password);
-        services.miseAJourCommercant(c);
-    }
-    
-    //Changer l'IBAN du compte du commercant
-    public void changerIban(String iban) {
-        ServicesImpl services = new ServicesImpl();
-        Commercant c = services.findCommercantById(this.getId());
         c.setIban(iban);
+        c.setTelephone(telephone);
         services.miseAJourCommercant(c);
     }
     

@@ -213,7 +213,7 @@ public class Employe implements Serializable {
     
 /*-----------------------------------Others-----------------------------------*/
     
-    //Editer le compte
+    //Editer le compte (adresse, nom, email, password)
     public void editerCompteEmploye(String adresse, String nom, String email, String password) {
         ServicesImpl services = new ServicesImpl();
         Employe e = services.findEmployeById(this.idEmploye);
